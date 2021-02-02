@@ -1,8 +1,13 @@
 package models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /* Jordi Hernandez i Gerard Lopez */
 
-import java.util.Date;
+import java.sql.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class Invoice {
 
@@ -15,6 +20,10 @@ public class Invoice {
     private float total;
     private int client_id;
 
+    public Invoice() {
+    	
+    }
+    
     public Invoice(int id, Date date, boolean paid, float taxable_base, float iva, float discount, float total, int client_id) {
         this.id = id;
         this.date = date;
@@ -25,6 +34,29 @@ public class Invoice {
         this.total = total;
         this.client_id = client_id;
     }
+    
+    public Invoice(ResultSet resultset) throws SQLException {
+    	this.setId(resultset.getInt("id"));
+    	this.setDate(resultset.getDate("date"));
+    	this.setPaid(resultset.getBoolean("paid"));
+    	this.setTaxable_base(resultset.getFloat("taxable_base"));
+    	this.setIva(resultset.getFloat("iva"));
+    	this.setDiscount(resultset.getFloat("discount"));
+    	this.setTotal(resultset.getFloat("total"));
+    	this.setClient_id(resultset.getInt("client_id"));
+    }
+    
+    public Invoice(HttpServletRequest request){
+    	this.setId(Integer.parseInt(request.getParameter("id")));
+    	this.setDate(Date.valueOf(request.getParameter("date")));
+    	this.setPaid(Boolean.getBoolean(request.getParameter("paid")));
+    	this.setTaxable_base(Float.parseFloat(request.getParameter("taxable_base")));
+    	this.setIva(Float.parseFloat(request.getParameter("iva")));
+    	this.setDiscount(Float.parseFloat(request.getParameter("discount")));
+    	this.setTotal(Float.parseFloat(request.getParameter("total")));
+    	this.setClient_id(Integer.parseInt(request.getParameter("client_id")));  	
+    }
+    
 
     public int getId() {
         return id;

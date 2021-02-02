@@ -1,5 +1,8 @@
 package models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /* Jordi Hernandez i Gerard Lopez */
 
 public class Article {
@@ -13,8 +16,18 @@ public class Article {
         this.name = name;
         this.price = price;
     }
+    
+    public Article() {
+    	
+    }
+    
+    public Article(ResultSet resultSet) throws SQLException {
+		this.setId(resultSet.getInt("id"));
+		this.setName(resultSet.getString("name"));
+		this.setPrice(resultSet.getFloat("price"));
+	}
 
-    public int getId() {
+	public int getId() {
         return id;
     }
 

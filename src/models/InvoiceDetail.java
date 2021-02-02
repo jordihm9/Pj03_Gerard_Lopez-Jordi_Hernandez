@@ -1,5 +1,10 @@
 package models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.http.HttpServletRequest;
+
 /* Jordi Hernandez i Gerard Lopez */
 
 public class InvoiceDetail {
@@ -10,6 +15,10 @@ public class InvoiceDetail {
     private float line_price;
     private int article_id;
     private int invoice_id;
+    
+    public InvoiceDetail() {
+    	
+    }
 
     public InvoiceDetail(int id, int line_number, int total_articles, float line_price, int article_id, int invoice_id) {
         this.id = id;
@@ -19,6 +28,25 @@ public class InvoiceDetail {
         this.article_id = article_id;
         this.invoice_id = invoice_id;
     }
+    
+    public InvoiceDetail(ResultSet resultSet) throws SQLException {
+    	this.setId(resultSet.getInt("id"));
+    	this.setLine_number(resultSet.getInt("line_number"));
+    	this.setTotal_articles(resultSet.getInt("total_articles"));
+    	this.setLine_price(resultSet.getFloat("line_price"));
+    	this.setArticle_id(resultSet.getInt("article_id"));
+    	this.setInvoice_id(resultSet.getInt("invoice_id"));
+    }
+    
+    public InvoiceDetail(HttpServletRequest request) {
+    	this.setId(Integer.parseInt(request.getParameter("id")));
+    	this.setLine_number(Integer.parseInt(request.getParameter("line_number")));
+    	this.setTotal_articles(Integer.parseInt(request.getParameter("total_articles")));
+    	this.setLine_price(Float.parseFloat(request.getParameter("line_price")));
+    	this.setArticle_id(Integer.parseInt(request.getParameter("article_id")));
+    	this.setInvoice_id(Integer.parseInt(request.getParameter("invoice_id")));
+    }
+    
 
     public int getId() {
         return id;

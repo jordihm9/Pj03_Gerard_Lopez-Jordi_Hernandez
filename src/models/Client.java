@@ -1,5 +1,10 @@
 package models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.http.HttpServletRequest;
+
 /* Jordi Hernandez i Gerard Lopez */
 
 public class Client {
@@ -7,18 +12,40 @@ public class Client {
     private int id;
     private String nif;
     private String name;
-    private String lasname;
+    private String lastname;
     private String adress;
     private String town;
+    
+    public Client() {
+    	
+    }
 
-    public Client(int id, String nif, String name, String lasname, String adress, String town) {
+    public Client(int id, String nif, String name, String lastname, String adress, String town) {
         this.id = id;
         this.nif = nif;
         this.name = name;
-        this.lasname = lasname;
+        this.lastname = lastname;
         this.adress = adress;
         this.town = town;
     }
+    
+    public Client(ResultSet resultSet) throws SQLException {
+    	this.setId(resultSet.getInt("id"));
+    	this.setNif(resultSet.getString("nif"));
+    	this.setName(resultSet.getString("lastname"));
+    	this.setAdress(resultSet.getString("adress"));
+    	this.setTown(resultSet.getString("town"));
+    }
+    
+    public Client(HttpServletRequest request) {
+    	this.setId(Integer.parseInt(request.getParameter("id")));
+    	this.setNif(request.getParameter("nif"));
+    	this.setName(request.getParameter("name"));
+    	this.setLastname(request.getParameter("lastname"));
+    	this.setAdress(request.getParameter("adress"));
+    	this.setTown(request.getParameter("town"));
+    }
+    
 
     public int getId() {
         return id;
@@ -44,12 +71,12 @@ public class Client {
         this.name = name;
     }
 
-    public String getLasname() {
-        return lasname;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLasname(String lasname) {
-        this.lasname = lasname;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getAdress() {
