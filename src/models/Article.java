@@ -1,3 +1,5 @@
+package models;
+
 /* Jordi Hernandez i Gerard Lopez */
 
 public class Article {
