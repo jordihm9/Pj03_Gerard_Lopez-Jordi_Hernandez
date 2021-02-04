@@ -17,13 +17,12 @@
 	<!-- TITLE -->
 	<title><jsp:invoke fragment="pageTitle"/></title>
 	<!-- CSS -->
-	<jsp:invoke fragment="importCss"/>
     <!-- JAVASCRIPT -->
-    <jsp:invoke fragment="importJs"/>
     <!-- FONTS -->
 </head>
 
 <body>
+	<t:header></t:header>
 	<jsp:doBody/>
 </body>
 
