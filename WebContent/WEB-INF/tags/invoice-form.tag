@@ -6,12 +6,10 @@
 		<table>
 			<tr>
 				<th>Invoice date</th>
-				<td>
-					<input type="date" name="invoiceDate" id="invoiceDate">
+				<td name="invoiceDate" id="invoiceDate">
 				</td>
 				<th>Number</th>
-				<td>
-					<input type="text" name="invoiceId" id="invoiceId" disabled>
+				<td name="invoiceId" id="invoiceId">
 				</td>
 				<td class="no-border">
 					<input type="checkbox" name="paid" id="paid">
@@ -25,22 +23,18 @@
 		<table>
 			<tr>
 				<th>NIF</th>
-				<td>
-					<input type="text" name="nif" id="nif">
+				<td name="nif" id="nif" contenteditable>
 				</td>
 				<th>Name</th>
-				<td colspan="3">
-					<input type="text" name="clientName" id="clientName">
+				<td colspan="3" name="clientName" id="clientName" contenteditable>
 				</td>
 			</tr>
 			<tr>
 				<th>Address</th>
-				<td>
-					<input type="text" name="address" id="address">
+				<td name="address" id="address" contenteditable>
 				</td>
 				<th>Town</th>
-				<td>
-					<input type="text" name="town" id="town">
+				<td name="town" id="town" contenteditable>
 				</td>
 			</tr>
 		</table>
@@ -72,8 +66,7 @@
 			<tfoot>
 				<tr>
 					<th colspan="4">Total articles</th>
-					<th>
-						<input type="text" name="totalArticles" id="totalArticles" disabled>
+					<th name="totalArticles" id="totalArticles">
 					</th>
 					<th>
 						Add Line
@@ -88,18 +81,15 @@
 		<table>
 			<tr>
 				<th>Discount</th>
-				<td>
-					<input type="text" name="discount" id="discount" disabled>
+				<td name="discount" id="discount">
 				</td>
 				<td class="no-border"></td>
 				<th>Discount Import</th>
-				<td>
-					<input type="text" name="discountImport" id="discountImport" disabled>
+				<td name="discountImport" id="discountImport">
 				</td>
 				<td class="no-border"></td>
 				<th>Taxable Base</th>
-				<td>
-					<input type="text" name="taxableBase" id="taxableBase" disabled>
+				<td name="taxableBase" id="taxableBase">
 				</td>
 			</tr>
 			<tr>
@@ -107,18 +97,15 @@
 			</tr>
 			<tr>
 				<th>IVA</th>
-				<td>
-					<input type="text" name="iva" id="iva" disabled>
+				<td name="iva" id="iva">
 				</td>
 				<td class="no-border"></td>
 				<th>IVA Import</th>
-				<td>
-					<input type="text" name="ivaImport" id="ivaImport" disabled>
+				<td name="ivaImport" id="ivaImport">
 				</td>
 				<td class="no-border"></td>
 				<th>Total</th>
-				<td>
-					<input type="text" name="total" id="total" disabled>
+				<td name="total" id="total">
 				</td>
 			</tr>
 		</table>
