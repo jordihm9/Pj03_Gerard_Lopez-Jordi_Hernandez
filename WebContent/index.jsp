@@ -6,9 +6,12 @@
 	<jsp:body>
 		<div id="invoices-list">
 			<t:invoices-table></t:invoices-table>
+			<button id="newInvoice" class="btn">New Invoice</button>
 		</div>
-		<div id="invoice-form">
-			<t:invoice-form></t:invoice-form>
+		<div id="invoice-form" class="outer blured">
+			<div class="center">
+				<t:invoice-form></t:invoice-form>
+			</div>
 		</div>
 	</jsp:body>
 </t:master>
