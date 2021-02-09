@@ -55,12 +55,12 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td class="code"></td>
-					<td class="article"></td>
-					<td class="units"></td>
-					<td class="price"></td>
-					<td class="subtotal"></td>
-					<td class="action"></td>
+					<td class="code" contenteditable></td>
+					<td class="article" contenteditable></td>
+					<td class="units" contenteditable></td>
+					<td class="price" contenteditable></td>
+					<td class="subtotal" contenteditable></td>
+					<td class="action" contenteditable></td>
 				</tr>
 			</tbody>
 			<tfoot>
