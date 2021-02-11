@@ -1,12 +1,12 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
-
 <form method="post">
 	<div class="container">
 		<h3>Invoice & Client Informaiton</h3>
 		<table>
 			<tr>
 				<th>Invoice date</th>
-				<td name="invoiceDate" id="invoiceDate">
+				<td>
+                    <input type="date" name="invoiceDate" id="invoiceDate" style="border: none;">
 				</td>
 				<th>Number</th>
 				<td name="invoiceId" id="invoiceId">
@@ -23,18 +23,18 @@
 		<table>
 			<tr>
 				<th>NIF</th>
-				<td name="nif" id="nif" contenteditable>
+				<td name="nif" id="nif">
 				</td>
 				<th>Name</th>
-				<td colspan="3" name="clientName" id="clientName" contenteditable>
+				<td colspan="3" name="clientName" id="clientName">
 				</td>
 			</tr>
 			<tr>
 				<th>Address</th>
-				<td name="address" id="address" contenteditable>
+				<td name="address" id="address">
 				</td>
 				<th>Town</th>
-				<td name="town" id="town" contenteditable>
+				<td name="town" id="town">
 				</td>
 			</tr>
 		</table>
@@ -55,22 +55,19 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td class="code" contenteditable></td>
+					<td class="code text-center" contenteditable></td>
 					<td class="article" contenteditable></td>
-					<td class="units" contenteditable></td>
-					<td class="price" contenteditable></td>
-					<td class="subtotal" contenteditable></td>
-					<td class="action" contenteditable></td>
+					<td class="units text-right" contenteditable></td>
+					<td class="price text-right euro"></td>
+					<td class="subtotal text-right euro"></td>
+					<td class="action"></td>
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="4">Total articles</th>
-					<th name="totalArticles" id="totalArticles">
-					</th>
-					<th>
-						Add Line
-					</th>
+					<th class="text-right" colspan="4">Total articles</th>
+					<td class="text-right euro" name="totalArticles" id="totalArticles"></td>
+					<th>Add Line</th>
 				</tr>
 			</tfoot>
 		</table>
@@ -81,32 +78,26 @@
 		<table>
 			<tr>
 				<th>Discount</th>
-				<td name="discount" id="discount">
+				<td class="text-right percentage" name="discount" id="discount">
 				</td>
 				<td class="no-border"></td>
 				<th>Discount Import</th>
-				<td name="discountImport" id="discountImport">
+				<td class="text-right euro" name="discountImport" id="discountImport">
 				</td>
 				<td class="no-border"></td>
 				<th>Taxable Base</th>
-				<td name="taxableBase" id="taxableBase">
+				<td class="text-right euro" name="taxableBase" id="taxableBase">
 				</td>
-			</tr>
-			<tr>
-				<td colspan="8"></td>
-			</tr>
+            </tr>
 			<tr>
 				<th>IVA</th>
-				<td name="iva" id="iva">
-				</td>
+				<td class="text-right percentage" name="iva" id="iva"></td>
 				<td class="no-border"></td>
 				<th>IVA Import</th>
-				<td name="ivaImport" id="ivaImport">
-				</td>
+				<td class="text-right euro" name="ivaImport" id="ivaImport"></td>
 				<td class="no-border"></td>
 				<th>Total</th>
-				<td name="total" id="total">
-				</td>
+				<td class="text-right euro" name="total" id="total"></td>
 			</tr>
 		</table>
 	</div>

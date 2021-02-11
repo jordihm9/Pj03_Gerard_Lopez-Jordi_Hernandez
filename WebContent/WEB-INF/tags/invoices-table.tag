@@ -13,14 +13,14 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+            <td class="id"></td>
+            <td class="date"></td>
+            <td class="paid"></td>
+            <td class="client"></td>
+            <td class="taxableIncome text-right euro"></td>
+            <td class="ivaImport text-right euro"></td>
+            <td class="total text-right euro"></td>
+            <td class="actions"></td>
 		</tr>
 	</tbody>
 	<tfoot>

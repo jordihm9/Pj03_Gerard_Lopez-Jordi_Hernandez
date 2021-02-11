@@ -5,6 +5,28 @@ button {
 	box-sizing: border-box;
 }
 
+table {
+	border-collapse: collapse;
+}
+
+th,
+td {
+	border: 2px solid black;
+	padding: 0.75rem 1.5rem;
+}
+
+th {
+	background: rgb(179, 179, 179);
+}
+
+.container {
+	padding: 1rem 2rem;
+}
+
+.no-border {
+	border: none !important;
+}
+
 .outer {
 	position: absolute;
 	top: 0;
@@ -27,6 +49,22 @@ button {
 	padding: 3rem 5rem;
 	box-shadow: 0 0 15px 0 #000000;
 	background: #ffffff;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.euro::after {
+	content: '€';
+}
+
+.percentage::after {
+	content: '%';
 }
 
 /* hidden by default */

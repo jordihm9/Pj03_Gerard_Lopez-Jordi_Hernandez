@@ -4,7 +4,7 @@
 <t:master>
 	<jsp:attribute name="pageTitle">Pj03 Billing</jsp:attribute>
 	<jsp:body>
-		<div id="invoices-list">
+		<div id="invoices-list" class="container">
 			<t:invoices-table></t:invoices-table>
 			<button id="newInvoice" class="btn">New Invoice</button>
 		</div>
