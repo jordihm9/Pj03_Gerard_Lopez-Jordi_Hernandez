@@ -53,21 +53,21 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="invoice-lines">
 				<tr>
 					<td class="code text-center" contenteditable></td>
-					<td class="article" contenteditable></td>
+					<td class="article"></td>
 					<td class="units text-right" contenteditable></td>
 					<td class="price text-right euro"></td>
 					<td class="subtotal text-right euro"></td>
-					<td class="action"></td>
+					<td class="action"><img class="edit-icon" src="./img/edit.svg" height="20px"><img class="delete-icon" src="./img/delete.svg" height="20px"></td>
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
 					<th class="text-right" colspan="4">Total articles</th>
 					<td class="text-right euro" name="totalArticles" id="totalArticles"></td>
-					<th>Add Line</th>
+					<th id="add-line"><img src="./img/plus.svg" height="30px"></th>
 				</tr>
 			</tfoot>
 		</table>
