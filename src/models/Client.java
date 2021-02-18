@@ -32,8 +32,9 @@ public class Client {
     public Client(ResultSet resultSet) throws SQLException {
     	this.setId(resultSet.getInt("id"));
     	this.setNif(resultSet.getString("nif"));
-    	this.setName(resultSet.getString("lastname"));
-    	this.setAddress(resultSet.getString("addess"));
+    	this.setName(resultSet.getString("name"));
+    	this.setLastname(resultSet.getString("lastname"));
+    	this.setAddress(resultSet.getString("address"));
     	this.setTown(resultSet.getString("town"));
     }
     
