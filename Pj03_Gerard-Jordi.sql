@@ -32,10 +32,12 @@ CREATE TABLE `clients` (
 DROP TABLE IF EXISTS `articles`;
 CREATE TABLE `articles` (
 	`id`		INT UNSIGNED	NOT NULL AUTO_INCREMENT,
+	`code`		VARCHAR(10)		NOT NULL,
 	`name`		VARCHAR(40) 	NOT NULL,
 	`price`		DOUBLE			NOT NULL,
 
-	CONSTRAINT `PK_articles`	PRIMARY KEY (`id`)
+	CONSTRAINT `PK_articles`		PRIMARY KEY (`id`),
+	CONSTRAINT `UK_articles_code`	UNIQUE (`code`)
 );
 
 -- --------------------------

@@ -9,14 +9,14 @@ USE `Pj03_Gerard-Jordi`;
 -- ARTICLES
 -- --------------------------
 DELETE FROM `articles`;
-INSERT INTO `articles` (`id`, `name`, `price`)
-	VALUES	(1, 'Laptop', 1247.35),
-			(2, 'Keyboard', 41.04),
-			(3, 'Mouse', 34.78),
-			(4, 'Mouse Pad', 9.44),
-			(5, 'Monitor', 132.89),
-			(6, 'CPU', 199.99),
-			(7, 'PC', 1355.67)
+INSERT INTO `articles` (`id`, `code`, `name`, `price`)
+	VALUES	(1, 'A100' ,'Laptop', 1247.35),
+			(2, 'B100' ,'Keyboard', 41.04),
+			(3, 'B300' ,'Mouse', 34.78),
+			(4, 'C100' ,'Mouse Pad', 9.44),
+			(5, 'D100' ,'Monitor', 132.89),
+			(6, 'E100' ,'CPU', 199.99),
+			(7, 'Z100' ,'PC', 1355.67)
 ;
 
 -- --------------------------

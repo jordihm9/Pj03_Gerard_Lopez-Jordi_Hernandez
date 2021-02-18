@@ -8,11 +8,13 @@ import java.sql.SQLException;
 public class Article {
 
     private int id;
+    private String code;
     private String name;
     private float price;
 
-    public Article(int id, String name, float price) {
+    public Article(int id, String code, String name, float price) {
         this.id = id;
+        this.code = code;
         this.name = name;
         this.price = price;
     }
@@ -23,6 +25,7 @@ public class Article {
     
     public Article(ResultSet resultSet) throws SQLException {
 		this.setId(resultSet.getInt("id"));
+		this.setCode(resultSet.getString("code"));
 		this.setName(resultSet.getString("name"));
 		this.setPrice(resultSet.getFloat("price"));
 	}
@@ -33,6 +36,14 @@ public class Article {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCode() {
+    	return code;
+    }
+    
+    public void setCode(String code) {
+    	this.code = code;
     }
 
     public String getName() {
