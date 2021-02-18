@@ -13,7 +13,7 @@ public class Client {
     private String nif;
     private String name;
     private String lastname;
-    private String adress;
+    private String address;
     private String town;
     
     public Client() {
@@ -25,7 +25,7 @@ public class Client {
         this.nif = nif;
         this.name = name;
         this.lastname = lastname;
-        this.adress = adress;
+        this.address = adress;
         this.town = town;
     }
     
@@ -33,7 +33,7 @@ public class Client {
     	this.setId(resultSet.getInt("id"));
     	this.setNif(resultSet.getString("nif"));
     	this.setName(resultSet.getString("lastname"));
-    	this.setAdress(resultSet.getString("adress"));
+    	this.setAddress(resultSet.getString("addess"));
     	this.setTown(resultSet.getString("town"));
     }
     
@@ -42,7 +42,7 @@ public class Client {
     	this.setNif(request.getParameter("nif"));
     	this.setName(request.getParameter("name"));
     	this.setLastname(request.getParameter("lastname"));
-    	this.setAdress(request.getParameter("adress"));
+    	this.setAddress(request.getParameter("address"));
     	this.setTown(request.getParameter("town"));
     }
     
@@ -79,12 +79,12 @@ public class Client {
         this.lastname = lastname;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     public String getTown() {
