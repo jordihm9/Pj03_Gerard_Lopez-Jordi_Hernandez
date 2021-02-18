@@ -103,8 +103,8 @@
 	</div>
 
 	<div class="container">
-		<button class="btn">Print</button>
-		<input class="btn" type="submit" value="Save Invoice">
-		<button class="btn">Cancel</button>
+		<button class="btn" id="print">Print</button>
+		<input class="btn" id="send" type="submit" value="Save Invoice">
+		<button class="btn" id="cancel">Cancel</button>
 	</div>
 </form>
