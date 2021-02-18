@@ -48,6 +48,6 @@ function addLine() {
             '<td class="units text-right" contenteditable></td>' +
             '<td class="price text-right euro"></td>' +
             '<td class="subtotal text-right euro"></td>' +
-            '<td class="action"><img class="edit-icon" src="./img/edit.svg" height="20px"><img class="delete-icon" src="./img/delete.svg" height="20px"></td></tr>');
+            '<td class="action"><img class="delete-icon" src="./img/delete.svg" height="20px"></td></tr>');
     });
 }
