@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import models.Client;
 import models.Invoice;
 
 public class InvoiceDAO {
@@ -27,7 +28,10 @@ public class InvoiceDAO {
 			// create the statement
 			select = con.createStatement();
 			// set the statement
-			String query = "SELECT * FROM `invoices`";
+			String query = "SELECT i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`discount`, i.`total`,"
+					+ " c.`id` AS 'client_id', c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
+					+ " FROM `invoices` i"
+					+ " INNER JOIN `clients` c ON c.`id` = i.`client_id`;";
 			// execute the statement
 			rs = select.executeQuery(query);
 			
@@ -60,7 +64,11 @@ public class InvoiceDAO {
 			// connect to DB
 			con = ConnectDB.connect();
 			// create the prepared statement
-			String query = "SELECT * FROM `invoices` WHERE `id` = ?";
+			String query = "SELECT i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`discount`, i.`total`,"
+					+ " c.`id` AS 'client_id', c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
+					+ " FROM `invoices` i"
+					+ " INNER JOIN `clients` c ON c.`id` = i.`client_id`"
+					+ " WHERE i.`id` = ?;";
 			select = (PreparedStatement) con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setInt(1, id);

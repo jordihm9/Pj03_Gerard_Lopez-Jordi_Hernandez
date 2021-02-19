@@ -37,19 +37,18 @@ public class Invoice {
     }
     
     public Invoice(ResultSet resultset) throws SQLException {
-    	this.setId(resultset.getInt("id"));
+    	this.setId(resultset.getInt("invoice_id"));
     	this.setDate(resultset.getDate("date"));
     	this.setPaid(resultset.getBoolean("paid"));
     	this.setTaxable_base(resultset.getFloat("taxable_base"));
     	this.setIva(resultset.getFloat("iva"));
     	this.setDiscount(resultset.getFloat("discount"));
     	this.setTotal(resultset.getFloat("total"));
-
-    	int client_id = resultset.getInt("client_id");
-        this.client = ClientDAO.selectById(client_id);
+        
+    	this.client = new Client(resultset);
     }
     
-    public Invoice(HttpServletRequest request) throws SQLException{
+    public Invoice(HttpServletRequest request) throws SQLException {
     	this.setId(Integer.parseInt(request.getParameter("id")));
     	this.setDate(Date.valueOf(request.getParameter("date")));
     	this.setPaid(Boolean.getBoolean(request.getParameter("paid")));

@@ -30,7 +30,7 @@ public class Client {
     }
     
     public Client(ResultSet resultSet) throws SQLException {
-    	this.setId(resultSet.getInt("id"));
+    	this.setId(resultSet.getInt("client_id"));
     	this.setNif(resultSet.getString("nif"));
     	this.setName(resultSet.getString("name"));
     	this.setLastname(resultSet.getString("lastname"));

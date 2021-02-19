@@ -23,7 +23,8 @@ public class ClientDAO {
 			// connect to database
 			con = ConnectDB.connect();
 			// create the prepared statement
-			String query = "SELECT * FROM `clients` WHERE `id` = ?";
+			String query = "SELECT c.`id` as 'client_id', c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
+					+ " FROM `clients` c WHERE `id` = ?";
 			select = con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setInt(1, id);
@@ -60,7 +61,8 @@ public class ClientDAO {
 			// connect to database
 			con = ConnectDB.connect();
 			// create the prepared statement
-			String query = "SELECT * FROM `clients` WHERE `nif` = ?";
+			String query = "SELECT c.`id` AS `client_id`, c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
+					+ "FROM `clients` WHERE `nif` = ?";
 			select = con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setString(1, nif);
