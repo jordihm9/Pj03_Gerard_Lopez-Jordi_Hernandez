@@ -3,37 +3,48 @@
 $(document).ready(init);
 
 function init() {
-    // show invoice form when new invoice button is pressed
-    $('#newInvoice').click(invoiceFormPopUp);
-    closeInvoiceFormPopUp();
-    addLine();
+    invoiceFormPopUp(); // detect when to open or close form pop up
 
     requestInvoices();
 }
 
 function invoiceFormPopUp() {
-    $('#invoice-form').show();
-    $('#nif').attr('contenteditable', '');
-    //setAttributes();
-}
+    // check if new invoice button is pressed
+    $('#newInvoice').click(function (e) {
+        // show form
+        $('#invoice-form').show();
 
-function closeInvoiceFormPopUp() {
-    let invoice = $('#invoice-form');
-    // hide invoice form on click cancel
-    $("#cancel").on("click", function() {
-        invoice.hide();
-    });
-    // hide invoice form on click ESC
-    $("body").keydown(function(event) {
-        if (event.which == 27) {
+        // event listeners to close the pop up
+        let invoice = $('#invoice-form');
+        // hide invoice form on click cancel
+        $("#cancel").on("click", function () {
             invoice.hide();
-        }
+            removeCloseEvents();
+        });
+        // hide invoice form on click ESC
+        $("body").keydown(function (event) {
+            if (event.which == 27) {
+                invoice.hide();
+                removeCloseEvents();
+            }
+        });
+
+        // hide invoice form on click cross
+        /*$(".tancar").on('click', function() {
+            invoice.hide();
+            removeCloseEvents();
+        });*/
+
+        // add line on add line click
+        $('#add-line').click(addInvoiceDetailLine);
     });
 
-    // hide invoice form on click cross
-    /*$(".tancar").on('click', function() {
-        invoice.hide();
-    });*/
+    function removeCloseEvents() {
+        $('#cancel').off('click');
+        $('body').off('keydown');
+        $('.tancar').off('click');
+        $('#add-line').off('click');
+    }
 }
 
 /*function setAttributes() {
@@ -41,16 +52,20 @@ function closeInvoiceFormPopUp() {
     $("#code").attr("digit", "");
 }*/
 
-// Add new invoice line
-function addLine() {
-    $("#add-line").on("click", function() {
-        $('#invoice-lines').append('<tr><td class="code text-center" contenteditable></td>' +
-            '<td class="article"></td>' +
-            '<td class="units text-right" contenteditable></td>' +
-            '<td class="price text-right euro"></td>' +
-            '<td class="subtotal text-right euro"></td>' +
-            '<td class="action"><img class="delete-icon" src="./img/delete.svg" height="20px"></td></tr>');
-    });
+/**
+ * Add an empty row at the bottom of the invoice details table
+ */
+function addInvoiceDetailLine() {
+    $('#invoice-lines').append($('<tr>')
+        .append($('<td>').addClass('code text-center'))
+        .append($('<td>').addClass('article'))
+        .append($('<td>').addClass('units text-right'))
+        .append($('<td>').addClass('price text-right euro'))
+        .append($('<td>').addClass('subtotal text-right euro'))
+        .append($('<td>').addClass('action')
+            .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+        )
+    );
 }
 
 /**
@@ -58,16 +73,22 @@ function addLine() {
  */
 function addInvoices(invoices) {
     invoices.forEach(invoice => {
-        var paid = "";
-        if(invoice.paid) paid = "checked";
-        $('#invoices-lines').append('<tr><td class="id">' + invoice.id + '</td>' +
-                '<td class="date">' + invoice.date + '</td>'+
-                '<td class="paid"><input type="checkbox" disabled ' + paid + '></td>'+
-                '<td class="client">' + invoice.client_id + '</td>'+
-                '<td class="taxableIncome text-right euro">' + invoice.taxable_base + '</td>'+
-                '<td class="ivaImport text-right euro">' + invoice.iva + '</td>'+
-                '<td class="total text-right euro">' + invoice.total + '</td>'+
-                '<td class="actions"><img class="edit-icon" src="./img/edit.svg" height="20px">' +
-                '<img class="delete-icon" src="./img/delete.svg" height="20px"></td></tr>');
+        $('#invoices-lines').append($('<tr>')
+            .append($('<td>').addClass('id').text(invoice.id))
+            .append($('<td>').addClass('date').text(invoice.date))
+            .append($('<td>').addClass('paid').append($('<input>')
+                .prop('type', 'checkbox')
+                .prop('disabled', true)
+                .prop('checked', invoice.paid)
+            ))
+            .append($('<td>').addClass('client').text(invoice.client_id))
+            .append($('<td>').addClass('taxablaIncome text-right euro').text(invoice.taxable_base))
+            .append($('<td>').addClass('ivaImport text-right euro').text(invoice.iva))
+            .append($('<td>').addClass('total text-right euro').text(invoice.total))
+            .append($('<td>').addClass('actions')
+                .append($('<img>').addClass('edit-icon').prop('src', './img/edit.svg').height('20px'))
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+            )
+        )
     });
 }
