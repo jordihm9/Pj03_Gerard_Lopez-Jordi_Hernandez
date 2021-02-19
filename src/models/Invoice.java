@@ -1,13 +1,14 @@
 package models;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /* Jordi Hernandez i Gerard Lopez */
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Date;
 
 import javax.servlet.http.HttpServletRequest;
+
+import dao.ClientDAO;
 
 public class Invoice {
 
@@ -18,13 +19,13 @@ public class Invoice {
     private float iva;
     private float discount;
     private float total;
-    private int client_id;
+    private Client client;
 
     public Invoice() {
     	
     }
     
-    public Invoice(int id, Date date, boolean paid, float taxable_base, float iva, float discount, float total, int client_id) {
+    public Invoice(int id, Date date, boolean paid, float taxable_base, float iva, float discount, float total, Client client) {
         this.id = id;
         this.date = date;
         this.paid = paid;
@@ -32,7 +33,7 @@ public class Invoice {
         this.iva = iva;
         this.discount = discount;
         this.total = total;
-        this.client_id = client_id;
+        this.client = client;
     }
     
     public Invoice(ResultSet resultset) throws SQLException {
@@ -43,10 +44,12 @@ public class Invoice {
     	this.setIva(resultset.getFloat("iva"));
     	this.setDiscount(resultset.getFloat("discount"));
     	this.setTotal(resultset.getFloat("total"));
-    	this.setClient_id(resultset.getInt("client_id"));
+
+    	int client_id = resultset.getInt("client_id");
+        this.client = ClientDAO.selectById(client_id);
     }
     
-    public Invoice(HttpServletRequest request){
+    public Invoice(HttpServletRequest request) throws SQLException{
     	this.setId(Integer.parseInt(request.getParameter("id")));
     	this.setDate(Date.valueOf(request.getParameter("date")));
     	this.setPaid(Boolean.getBoolean(request.getParameter("paid")));
@@ -54,7 +57,10 @@ public class Invoice {
     	this.setIva(Float.parseFloat(request.getParameter("iva")));
     	this.setDiscount(Float.parseFloat(request.getParameter("discount")));
     	this.setTotal(Float.parseFloat(request.getParameter("total")));
-    	this.setClient_id(Integer.parseInt(request.getParameter("client_id")));  	
+
+        int client_id = Integer.parseInt(request.getParameter("client_id"));
+        this.client = ClientDAO.selectById(client_id);
+
     }
     
 
@@ -114,11 +120,11 @@ public class Invoice {
         this.total = total;
     }
 
-    public int getClient_id() {
-        return client_id;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClient_id(int client_id) {
-        this.client_id = client_id;
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
