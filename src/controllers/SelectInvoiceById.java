@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dao.InvoiceDAO;
+import dao.InvoiceDetailDAO;
 import models.Invoice;
+import models.InvoiceDetail;
 
 /**
  * Servlet implementation class SelectInvoiceById
@@ -42,16 +44,22 @@ public class SelectInvoiceById extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			// select specific invoice from database
 			Invoice invoice = InvoiceDAO.selectById(id);
 			
+			// select the list of invoice details
+			ArrayList<InvoiceDetail> details = InvoiceDetailDAO.selectByInvoiceId(id);
+			
 			// check if there is an invoice
 			if (invoice != null) {
-				// parse ArrayList to JSON (string)
-				String json = new Gson().toJson(invoice);
+				// parse invoice to json and list of details to json
+				String invoiceJSON = new Gson().toJson(invoice);
+				String detailsJSON = new Gson().toJson(details);
+				
+				String json = "{\"invoice\":"+ invoiceJSON +",\"details\":"+ detailsJSON +"}";
+				
 				response.getWriter().write(json);
 				
 				// set response attributes

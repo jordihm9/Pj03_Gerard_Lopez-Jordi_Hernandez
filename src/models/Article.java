@@ -24,7 +24,7 @@ public class Article {
     }
     
     public Article(ResultSet resultSet) throws SQLException {
-		this.setId(resultSet.getInt("id"));
+		this.setId(resultSet.getInt("article_id"));
 		this.setCode(resultSet.getString("code"));
 		this.setName(resultSet.getString("name"));
 		this.setPrice(resultSet.getFloat("price"));

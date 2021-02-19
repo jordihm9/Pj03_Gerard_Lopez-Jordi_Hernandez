@@ -34,17 +34,13 @@ public class InvoiceDetail {
     }
     
     public InvoiceDetail(ResultSet resultSet) throws SQLException {
-    	this.setId(resultSet.getInt("id"));
+    	this.setId(resultSet.getInt("invoice_detail_id"));
     	this.setLine_number(resultSet.getInt("line_number"));
     	this.setTotal_articles(resultSet.getInt("total_articles"));
     	this.setLine_price(resultSet.getFloat("line_price"));
 
-    	int article_id = resultSet.getInt("article_id");
-        this.article = ArticleDAO.selectById(article_id);
-
-    	int invoice_id = resultSet.getInt("invoice_id");
-        this.invoice = InvoiceDAO.selectById(invoice_id);
-
+        this.article = new Article(resultSet);
+        this.invoice = new Invoice(resultSet);
     }
     
     public InvoiceDetail(HttpServletRequest request) throws SQLException {
@@ -59,7 +55,6 @@ public class InvoiceDetail {
     	int invoice_id = Integer.parseInt(request.getParameter("invoice_id"));
     	this.invoice = InvoiceDAO.selectById(invoice_id);
     }
-    
 
     public int getId() {
         return id;
