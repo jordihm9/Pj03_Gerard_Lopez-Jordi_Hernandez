@@ -3,48 +3,55 @@
 $(document).ready(init);
 
 function init() {
-    invoiceFormPopUp(); // detect when to open or close form pop up
+    // check if new invoice button is pressed
+    $('#newInvoice').click(()=> {
+        invoiceFormPopUp();
+        addInvoiceDetailLine(); // add an empty line
+    });
 
     requestInvoices();
 }
 
+/**
+ * Show the invoice form as a pop up
+ * Activate the event listeners necessary to close it.
+ * Turn them off when one of them has been activated.
+ */
 function invoiceFormPopUp() {
-    // check if new invoice button is pressed
-    $('#newInvoice').click(function (e) {
-        // show form
-        $('#invoice-form').show();
-        addInvoiceDetailLine();
+    $('#invoice-form').show(); // show form
 
-        // event listeners to close the pop up
-        let invoice = $('#invoice-form');
-        // hide invoice form on click cancel
-        $("#cancel").on("click", function () {
-            invoice.hide();
-            removeCloseEvents();
-        });
-        // hide invoice form on click ESC
-        $("body").keydown(function (event) {
-            if (event.which == 27) {
-                invoice.hide();
-                removeCloseEvents();
-            }
-        });
-
-        // hide invoice form on click cross
-        /*$(".tancar").on('click', function() {
-            invoice.hide();
-            removeCloseEvents();
-        });*/
-
-        // add line on add line click
-        $('#add-line').click(addInvoiceDetailLine);
+    // event listeners to close the pop up
+    let invoice = $('#invoice-form');
+    // hide invoice form on click cancel
+    $("#cancel").on("click", function (ev) {
+        ev.preventDefault(); // prevent reloading window
+        close();
+    });
+    // hide invoice form on click ESC
+    $("body").keydown(function (event) {
+        if (event.which == 27) {
+            close();
+        }
     });
 
-    function removeCloseEvents() {
+    // hide invoice form on click cross
+    /*$(".tancar").on('click', function() {
+        close();
+    });*/
+
+    // add line on add line click
+    $('#add-line').click(addInvoiceDetailLine);
+
+    function close() {
+        // remove events listeners
         $('#cancel').off('click');
         $('body').off('keydown');
         $('.tancar').off('click');
         $('#add-line').off('click');
+        // clean table
+        cleanInvoiceDetails();
+        // hide popup
+        invoice.hide();
     }
 }
 
@@ -88,29 +95,33 @@ function addInvoices(invoices) {
             .append($('<td>').addClass('total text-right euro').text(invoice.total))
             .append($('<td>').addClass('actions')
                 .append($('<img>').addClass('edit-icon').prop('src', './img/edit.svg')
-                .height('20px').on('click', function(ev){
-                                    ev.stopPropagation();
-                                    ev.stopImmediatePropagation();
-                                    var row = ev.target.parentNode.parentNode;
-                                    var id = parseInt(row.firstChild.innerText);
-                                    console.log(id);
-                                    requestInvoice(id);
-                                }))
+                    .height('20px').on('click', function (ev) {
+                        ev.stopPropagation();
+                        ev.stopImmediatePropagation();
+                        var row = ev.target.parentNode.parentNode;
+                        var id = parseInt(row.firstChild.innerText);
+                        console.log(id);
+                        requestInvoice(id);
+                    }))
                 .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
             )
         )
     });
 }
 
-
+/**
+ * Fill the invoice form with the data passed as argument
+ * @param {object} data include client data, invoice and each details data
+ */
 function fillFieldsInvoice(data) {
-    var invoice = data.invoice;
-    var details = data.details;
-    var client = invoice.client;
-    $('#invoice-form').show();
+    invoiceFormPopUp();
 
-    // add line on add line click
-    $('#add-line').click(addInvoiceDetailLine);
+    var invoice = data.invoice;     // get invoice data
+    var details = data.details;     // get invoice details data
+    var client = invoice.client;    // get client data
+
+    // fill form with all data
+    document.querySelector('#invoiceDate').valueAsDate = new Date(invoice.date);
     $('#invoiceId').text(invoice.id);
     $('#paid').prop('checked', invoice.paid);
     $('#nif').text(client.nif);
@@ -120,22 +131,33 @@ function fillFieldsInvoice(data) {
     $('#taxableBase').text(invoice.taxable_base);
     $('#total').text(invoice.total);
     $('#ivaImport').text(invoice.iva);
-    //$('#invoiceDate').val(invoice.date.replace(/^(\d{2})\.(\d{2})\.(\d{4})$/g,'$3-$2-$1'));
     $('#discountImport').text(invoice.discount);
 
+    // add each invoice detail as a new line
     details.forEach(line => {
-        var article = line.article;
+        var article = line.article;     // get article data
+
+        // add a new row and append each cell
         $('#invoice-lines').append($('<tr>')
-        .append($('<td>').addClass('code text-center').text(article.code))
-        .append($('<td>').addClass('article').text(article.name))
-        .append($('<td>').addClass('units text-right'))
-        .append($('<td>').addClass('price text-right euro').text(article.price))
-        .append($('<td>').addClass('subtotal text-right euro').text(line.line_price))
-        .append($('<td>').addClass('action')
-            .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
-        )
-    );
-        
+            .append($('<td>').addClass('code text-center').text(article.code))
+            .append($('<td>').addClass('article').text(article.name))
+            .append($('<td>').addClass('units text-right').text(line.total_articles))
+            .append($('<td>').addClass('price text-right euro').text(article.price))
+            .append($('<td>').addClass('subtotal text-right euro').text(line.line_price))
+            .append($('<td>').addClass('action')
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+            )
+        );
+
     });
 
+}
+
+/**
+ * Delete every line of the table invoices details
+ */
+function cleanInvoiceDetails() {
+    $('#invoice-lines tr').each(function () {
+        $(this).remove();
+    });
 }
