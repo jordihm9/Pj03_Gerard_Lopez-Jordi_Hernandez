@@ -81,7 +81,7 @@ function addInvoices(invoices) {
                 .prop('disabled', true)
                 .prop('checked', invoice.paid)
             ))
-            .append($('<td>').addClass('client').text(invoice.client_id))
+            .append($('<td>').addClass('client').text(invoice.client.lastname +', '+ invoice.client.name))
             .append($('<td>').addClass('taxablaIncome text-right euro').text(invoice.taxable_base))
             .append($('<td>').addClass('ivaImport text-right euro').text(invoice.iva))
             .append($('<td>').addClass('total text-right euro').text(invoice.total))
