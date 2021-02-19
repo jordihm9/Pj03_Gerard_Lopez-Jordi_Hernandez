@@ -11,16 +11,8 @@
 		<th>Total</th>
 		<th>Actions</th>
 	</thead>
-	<tbody>
+	<tbody id="invoices-lines">
 		<tr>
-            <td class="id"></td>
-            <td class="date"></td>
-            <td class="paid"></td>
-            <td class="client"></td>
-            <td class="taxableIncome text-right euro"></td>
-            <td class="ivaImport text-right euro"></td>
-            <td class="total text-right euro"></td>
-            <td class="actions"><img class="edit-icon" src="./img/edit.svg" height="20px"><img class="delete-icon" src="./img/delete.svg" height="20px"></td>
 		</tr>
 	</tbody>
 	<tfoot>

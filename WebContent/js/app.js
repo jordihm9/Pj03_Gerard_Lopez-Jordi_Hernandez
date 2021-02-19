@@ -7,6 +7,7 @@ function init() {
     $('#newInvoice').click(invoiceFormPopUp);
     closeInvoiceFormPopUp();
     addLine();
+    showInvoices();
 
 }
 
@@ -49,5 +50,30 @@ function addLine() {
             '<td class="price text-right euro"></td>' +
             '<td class="subtotal text-right euro"></td>' +
             '<td class="action"><img class="delete-icon" src="./img/delete.svg" height="20px"></td></tr>');
+    });
+}
+
+/***** AJAX PETITION TO GET INVOICES *****/
+
+function showInvoices() {
+    $.ajax({
+        url: 'SendInvoices',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+            res.forEach(invoice => {
+                var paid = "";
+                if(invoice.paid) paid = "checked";
+                $('#invoices-lines').append('<tr><td class="id">' + invoice.id + '</td>' +
+                        '<td class="date">' + invoice.date + '</td>'+
+                        '<td class="paid"><input type="checkbox" disabled ' + paid + '></td>'+
+                        '<td class="client">' + invoice.client_id + '</td>'+
+                        '<td class="taxableIncome text-right euro">' + invoice.taxable_base + '</td>'+
+                        '<td class="ivaImport text-right euro">' + invoice.iva + '</td>'+
+                        '<td class="total text-right euro">' + invoice.total + '</td>'+
+                        '<td class="actions"><img class="edit-icon" src="./img/edit.svg" height="20px">' +
+                        '<img class="delete-icon" src="./img/delete.svg" height="20px"></td></tr>');
+            });
+        }
     });
 }
