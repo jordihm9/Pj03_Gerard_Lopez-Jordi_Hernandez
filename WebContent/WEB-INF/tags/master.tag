@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- SCRIPTS -->
 	<script src="js/jQuery341.js"></script>
+	<script src="js/requests.js"></script>
     <script src="js/app.js"></script>
     <!-- FONTS -->
 </head>

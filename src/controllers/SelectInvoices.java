@@ -18,14 +18,14 @@ import models.Invoice;
 /**
  * Servlet implementation class SendInvoices
  */
-@WebServlet("/SendInvoices")
-public class SendInvoices extends HttpServlet {
+@WebServlet("/invoices/select")
+public class SelectInvoices extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SendInvoices() {
+    public SelectInvoices() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,29 +34,36 @@ public class SendInvoices extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setStatus(405); // "Method not allowed"
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		ArrayList<Invoice> list;
 		try {
-			list = InvoiceDAO.selectAll();
-			String json = new Gson().toJson(list);
-			response.setContentType("application/json");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(json);
+			// select all invoices from database
+			ArrayList<Invoice> list = InvoiceDAO.selectAll();
+			
+			// check the list is not empty
+			if (list.size() >= 1) {
+				// parse ArrayList to JSON (string)
+				String json = new Gson().toJson(list);
+				response.getWriter().write(json);
+				
+				// set response attributes
+				response.setStatus(200); // 200: all OK
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+			} else {
+				response.setStatus(204); // "No Content" server not returning any content
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			// send server error status code (500)
+			response.setStatus(500);
+
 			e.printStackTrace();
 		}
-
-	    
-		
 	}
 
 }
