@@ -18,3 +18,26 @@ function requestInvoices() {
         }
     });
 }
+
+
+/**
+ * Send ajax request to get data from an specific invoice
+ */
+function requestInvoice(id) {
+    $.ajax({
+        type: "POST",
+        url: "invoice/select",
+        datatype: "html",
+        data: {'id': id},
+        success: function (data) {
+            // check list
+            if (data) {
+                fillFieldsInvoice(data);
+                console.log(data);
+            }
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+        }
+    });
+}

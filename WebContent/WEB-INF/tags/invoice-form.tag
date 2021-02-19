@@ -55,12 +55,6 @@
 			</thead>
 			<tbody id="invoice-lines">
 				<tr>
-					<td class="code text-center" contenteditable></td>
-					<td class="article"></td>
-					<td class="units text-right" contenteditable></td>
-					<td class="price text-right euro"></td>
-					<td class="subtotal text-right euro"></td>
-					<td class="action"><img class="delete-icon" src="./img/delete.svg" height="20px"></td>
 				</tr>
 			</tbody>
 			<tfoot>
