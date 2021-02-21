@@ -94,16 +94,20 @@ function addInvoices(invoices) {
             .append($('<td>').addClass('ivaImport text-right euro').text(invoice.iva))
             .append($('<td>').addClass('total text-right euro').text(invoice.total))
             .append($('<td>').addClass('actions')
-                .append($('<img>').addClass('edit-icon').prop('src', './img/edit.svg')
-                    .height('20px').on('click', function (ev) {
+                .append($('<img>').addClass('edit-icon').prop('src', './img/edit.svg').height('20px')
+                    .on('click', function (ev) {
                         ev.stopPropagation();
                         ev.stopImmediatePropagation();
-                        var row = ev.target.parentNode.parentNode;
-                        var id = parseInt(row.firstChild.innerText);
-                        console.log(id);
-                        requestInvoice(id);
+                        // send request to get all information from the current invoice
+                        requestInvoice(invoice.id);
                     }))
                 .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+                    .on('click', function (ev) {
+                        ev.stopPropagation();
+                        ev.stopImmediatePropagation();
+                        // send request to delete the current invoice
+                        requestDelete(invoice.id);
+                    })
             )
         )
     });
@@ -160,4 +164,13 @@ function cleanInvoiceDetails() {
     $('#invoice-lines tr').each(function () {
         $(this).remove();
     });
+}
+
+/**
+ * Delete every line of the invoices table
+ */
+function clearInvoicesTable() {
+    $('#invoices-lines tr').each(function () {
+        $(this).remove();
+    })
 }

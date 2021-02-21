@@ -7,9 +7,14 @@ function requestInvoices() {
     $.ajax({
         type: "POST",
         url: "invoices/select",
-        success: function (data) {
-            // check list is not empty
-            if (data.length >= 1) {
+        success: function (data, textStatus, xhr) {
+            // clear the table body before inserting rows
+            clearInvoicesTable();
+            // check if returned 204 status code = no invoices found
+            if (xhr.status === 204) {
+                // no invoices returned
+                console.log("No invoices found.");
+            } else if (xhr.status === 200){
                 addInvoices(data);
             }
         },
@@ -33,11 +38,26 @@ function requestInvoice(id) {
             // check list
             if (data) {
                 fillFieldsInvoice(data);
-                console.log(data);
             }
         },
         error: function (data) {
             console.log('An error occurred.');
+        }
+    });
+}
+
+function requestDelete(id) {
+    $.ajax({
+        type: "POST",
+        url: "invoice/delete",
+        data: {"id": id},
+        dataType: "HTML",
+        success: function (response) {
+            console.log("Invoice deleted successfully.");
+            requestInvoices();
+        },
+        error: function (data) {
+            console.log("Invoice could not have been deleted.");
         }
     });
 }
