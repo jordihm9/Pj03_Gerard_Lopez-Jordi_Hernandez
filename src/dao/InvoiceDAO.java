@@ -89,4 +89,35 @@ public class InvoiceDAO {
 		
 		return null;
 	}
+	
+	/**
+	 * Delete an invoice by ID
+	 * @param id
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("finally")
+	public static boolean delete(int id) throws SQLException {
+		boolean deleteOk = false;
+		Connection con = null;
+		PreparedStatement delete = null;
+		
+		try {
+			// connect to DB
+			con = ConnectDB.connect();
+			// create the prepared statement
+			String query = "DELETE FROM `invoices` WHERE `id` = ?;";
+			delete = con.prepareStatement(query);
+			// set the value for the prepared statement
+			delete.setInt(1, id);
+			// execute the statement
+			delete.executeUpdate();
+			// invoices details are deleted automatically when the invoice has been deleted
+			deleteOk = true;
+		}
+		finally {
+			con.close();
+			delete.close();
+			return deleteOk;
+		}
+	}
 }
