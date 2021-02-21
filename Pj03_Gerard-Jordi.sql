@@ -52,11 +52,12 @@ CREATE TABLE `invoices` (
 	`iva`				FLOAT			NOT NULL DEFAULT 21,
 	`discount`			FLOAT			DEFAULT 0,
 	`total`				DOUBLE			NOT NULL,
-	`client_id`			INT UNSIGNED	NOT NULL,
+	`client_id`			INT UNSIGNED,
 
 	CONSTRAINT `PK_invoices` 			PRIMARY KEY (`id`),
 	CONSTRAINT `FK_invoices_clients`	FOREIGN KEY (`client_id`)
 		REFERENCES `clients` (`id`)
+			ON DELETE SET NULL
 );
 
 -- --------------------------
@@ -68,7 +69,7 @@ CREATE TABLE `invoices_details` (
 	`line_number`		TINYINT UNSIGNED	NOT NULL,
 	`total_articles`	TINYINT				NOT NULL,
 	`line_price`		DOUBLE				NOT NULL,
-	`article_id`		INT UNSIGNED		NOT NULL,
+	`article_id`		INT UNSIGNED,
 	`invoice_id`		INT	UNSIGNED		NOT NULL,
 
 	CONSTRAINT `PK_invoices_details`				PRIMARY KEY (`id`),
@@ -78,4 +79,5 @@ CREATE TABLE `invoices_details` (
 			ON DELETE CASCADE,
 	CONSTRAINT `FK_invoices_details_articles`		FOREIGN KEY (`article_id`)
 		REFERENCES `articles` (`id`)
+			ON DELETE SET NULL
 );
