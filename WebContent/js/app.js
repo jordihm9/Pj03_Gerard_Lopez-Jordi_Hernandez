@@ -73,11 +73,22 @@ function addInvoiceDetailLine() {
             .append($('<td>').addClass('subtotal text-right euro'))
             .append($('<td>').addClass('action')
                 .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px')
-                    .click((ev)=> {
-                        $(ev.target).remove();
-                    }))
+                    .on('click', function(ev) { removeInvoiceDetailLine(ev); }))
             )
         );
+    }
+}
+
+/**
+ * Remove a invoice detail line
+ * if invoice is paid, block action
+ * @param {*} ev 
+ */
+function removeInvoiceDetailLine(ev) {
+    // check if invoice is paid
+    if (!$('#paid').prop('checked')) {
+        // delete the row
+        $(ev.target).parent().parent().remove();
     }
 }
 
@@ -170,7 +181,8 @@ function fillFieldsInvoice(data) {
             .append($('<td>').addClass('price text-right euro').text(article.price))
             .append($('<td>').addClass('subtotal text-right euro').text(line.line_price))
             .append($('<td>').addClass('action')
-                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px')
+                    .on('click', function(ev) { removeInvoiceDetailLine(ev); }))
             )
         );
 
