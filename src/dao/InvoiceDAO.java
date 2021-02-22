@@ -28,7 +28,7 @@ public class InvoiceDAO {
 			// create the statement
 			select = con.createStatement();
 			// set the statement
-			String query = "SELECT i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`discount`, i.`total`,"
+			String query = "SELECT i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`iva_import`, i.`discount`, i.`discount_import`, i.`total`,"
 					+ " c.`id` AS 'client_id', c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
 					+ " FROM `invoices` i"
 					+ " INNER JOIN `clients` c ON c.`id` = i.`client_id`;";
@@ -64,7 +64,7 @@ public class InvoiceDAO {
 			// connect to DB
 			con = ConnectDB.connect();
 			// create the prepared statement
-			String query = "SELECT i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`discount`, i.`total`,"
+			String query = "SELECT i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`iva_import`, i.`discount`, i.`discount_import`, i.`total`,"
 					+ " c.`id` AS 'client_id', c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
 					+ " FROM `invoices` i"
 					+ " INNER JOIN `clients` c ON c.`id` = i.`client_id`"

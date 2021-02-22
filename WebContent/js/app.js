@@ -6,7 +6,7 @@ function init() {
     // check if new invoice button is pressed
     $('#newInvoice').click(() => {
         invoiceFormPopUp();
-        addInvoiceDetailLine(); // add an empty line
+        addInvoiceDetailLine(); // add an empty line        
     });
 
     requestInvoices();
@@ -18,6 +18,7 @@ function init() {
  * Turn them off when one of them has been activated.
  */
 function invoiceFormPopUp() {
+    resetInvoiceForm();
     $('#invoice-form').show(); // show form
 
     // event listeners to close the pop up
@@ -80,7 +81,23 @@ function addInvoiceDetailLine() {
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
             .append($('<td>').addClass('action')
-                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))));
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px')
+                    .on('click', function(ev) { removeInvoiceDetailLine(ev); }))
+            )
+        );
+    }
+}
+
+/**
+ * Remove a invoice detail line
+ * if invoice is paid, block action
+ * @param {*} ev 
+ */
+function removeInvoiceDetailLine(ev) {
+    // check if invoice is paid
+    if (!$('#paid').prop('checked')) {
+        // delete the row
+        $(ev.target).parent().parent().remove();
     }
 }
 
@@ -109,7 +126,7 @@ function addInvoices(invoices) {
                 .prop('checked', invoice.paid)
             ))
             .append($('<td>').addClass('client').text(invoice.client.lastname + ', ' + invoice.client.name))
-            .append($('<td>').addClass('taxablaIncome text-right euro').text(invoice.taxable_base))
+            .append($('<td>').addClass('taxableBase text-right euro').text(invoice.taxable_base))
             .append($('<td>').addClass('ivaImport text-right euro').text(invoice.iva))
             .append($('<td>').addClass('total text-right euro').text(invoice.total))
             .append($('<td>').addClass('actions')
@@ -158,8 +175,10 @@ function fillFieldsInvoice(data) {
     $('#town').text(client.town);
     $('#taxableBase').text(invoice.taxable_base);
     $('#total').text(invoice.total);
-    $('#ivaImport').text(invoice.iva);
-    $('#discountImport').text(invoice.discount);
+    $('#iva').text(invoice.iva);
+    $('#ivaImport').text(invoice.ivaImport);
+    $('#discount').text(invoice.discount);
+    $('#discountImport').text(invoice.discountImport);
 
     // add each invoice detail as a new line
     details.forEach(line => {
@@ -173,12 +192,33 @@ function fillFieldsInvoice(data) {
             .append($('<td>').addClass('price text-right euro').text(article.price))
             .append($('<td>').addClass('subtotal text-right euro').text(line.line_price))
             .append($('<td>').addClass('action')
-                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px')
+                    .on('click', function(ev) { removeInvoiceDetailLine(ev); }))
             )
         );
 
     });
 
+}
+
+/**
+ * Reset the invoice form data
+ */
+function resetInvoiceForm() {
+    $('#invoiceId').text(null);
+    $('#invoiceDate').val(null);
+    $('#nif').text(null);
+    $('#clientName').text(null);
+    $('#address').text(null);
+    $('#town').text(null);
+    $('#totalArticles').text(null);
+    $('#discount').text(null);
+    $('#discountImport').text(null);
+    $('#iva').text(null);
+    $('#ivaImport').text(null);
+    $('#taxableBase').text(null);
+    $('#total').text(null);
+    cleanInvoiceDetails();
 }
 
 /**

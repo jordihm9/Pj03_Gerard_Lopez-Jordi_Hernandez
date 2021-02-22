@@ -50,7 +50,9 @@ CREATE TABLE `invoices` (
 	`paid`				TINYINT(1)		NOT NULL,
 	`taxable_base`		DOUBLE			NOT NULL COMMENT 'Price without IVA',
 	`iva`				FLOAT			NOT NULL DEFAULT 21,
+	`iva_import`		FLOAT			NOT NULL DEFAULT 0,
 	`discount`			FLOAT			DEFAULT 0,
+	`discount_import`	FLOAT			DEFAULT 0,
 	`total`				DOUBLE			NOT NULL,
 	`client_id`			INT UNSIGNED,
 
