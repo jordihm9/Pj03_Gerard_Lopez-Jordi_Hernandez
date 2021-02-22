@@ -42,7 +42,7 @@ function invoiceFormPopUp() {
     // add line on add line click
     $('#add-line').click(addInvoiceDetailLine);
 
-    validateForm();
+    //validateForm();
 
     //add content editable and today's date
     addContentEditable();
@@ -66,15 +66,21 @@ function invoiceFormPopUp() {
 function addInvoiceDetailLine() {
     if (!$('#paid').prop('checked')) {
         $('#invoice-lines').append($('<tr>')
-            .append($('<td>').addClass('code text-center').attr('contenteditable', 'true'))
+            .append($('<td>').addClass('code text-center').attr('contenteditable', 'true')
+                .on("input propertychange", function() {
+                    console.log("canvia");
+                    validateEmpties(this);
+                }))
             .append($('<td>').addClass('article'))
-            .append($('<td>').addClass('units text-right').attr('contenteditable', 'true'))
+            .append($('<td>').addClass('units text-right').attr('contenteditable', 'true')
+                .on("input propertychange", function() {
+                    console.log("canvia");
+                    validateEmpties(this);
+                }))
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
             .append($('<td>').addClass('action')
-                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
-            )
-        );
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))));
     }
 }
 
@@ -119,7 +125,9 @@ function addInvoices(invoices) {
                     ev.stopPropagation();
                     ev.stopImmediatePropagation();
                     // send request to delete the current invoice
-                    requestDelete(invoice.id);
+                    if (confirm("Are you sure to delete this invoice?")) {
+                        requestDelete(invoice.id);
+                    }
                 })
             )
         )
