@@ -4,7 +4,7 @@ $(document).ready(init);
 
 function init() {
     // check if new invoice button is pressed
-    $('#newInvoice').click(()=> {
+    $('#newInvoice').click(() => {
         invoiceFormPopUp();
         addInvoiceDetailLine(); // add an empty line
     });
@@ -23,12 +23,12 @@ function invoiceFormPopUp() {
     // event listeners to close the pop up
     let invoice = $('#invoice-form');
     // hide invoice form on click cancel
-    $("#cancel").on("click", function (ev) {
+    $("#cancel").on("click", function(ev) {
         ev.preventDefault(); // prevent reloading window
         close();
     });
     // hide invoice form on click ESC
-    $("body").keydown(function (event) {
+    $("body").keydown(function(event) {
         if (event.which == 27) {
             close();
         }
@@ -43,6 +43,9 @@ function invoiceFormPopUp() {
     $('#add-line').click(addInvoiceDetailLine);
 
     validateForm();
+
+    //add content editable and today's date
+    addContentEditable();
 
     function close() {
         // remove events listeners
@@ -61,11 +64,11 @@ function invoiceFormPopUp() {
  * Add an empty row at the bottom of the invoice details table
  */
 function addInvoiceDetailLine() {
-    if(!$('#paid').prop('checked')) {
+    if (!$('#paid').prop('checked')) {
         $('#invoice-lines').append($('<tr>')
-            .append($('<td>').addClass('code text-center').attr('contenteditable','true'))
+            .append($('<td>').addClass('code text-center').attr('contenteditable', 'true'))
             .append($('<td>').addClass('article'))
-            .append($('<td>').addClass('units text-right').attr('contenteditable','true'))
+            .append($('<td>').addClass('units text-right').attr('contenteditable', 'true'))
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
             .append($('<td>').addClass('action')
@@ -73,6 +76,17 @@ function addInvoiceDetailLine() {
             )
         );
     }
+}
+
+/**
+ * Add contenteditable attribute in the create invoice option
+ */
+function addContentEditable() {
+    document.querySelector('#invoiceDate').valueAsDate = new Date();
+    $('#nif').attr('contenteditable', true);
+    $('#clientName').attr('contenteditable', true);
+    $('#address').attr('contenteditable', true);
+    $('#town').attr('contenteditable', true);
 }
 
 /**
@@ -94,19 +108,19 @@ function addInvoices(invoices) {
             .append($('<td>').addClass('total text-right euro').text(invoice.total))
             .append($('<td>').addClass('actions')
                 .append($('<img>').addClass('edit-icon').prop('src', './img/edit.svg').height('20px')
-                    .on('click', function (ev) {
+                    .on('click', function(ev) {
                         ev.stopPropagation();
                         ev.stopImmediatePropagation();
                         // send request to get all information from the current invoice
                         requestInvoice(invoice.id);
                     }))
                 .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
-                    .on('click', function (ev) {
-                        ev.stopPropagation();
-                        ev.stopImmediatePropagation();
-                        // send request to delete the current invoice
-                        requestDelete(invoice.id);
-                    })
+                .on('click', function(ev) {
+                    ev.stopPropagation();
+                    ev.stopImmediatePropagation();
+                    // send request to delete the current invoice
+                    requestDelete(invoice.id);
+                })
             )
         )
     });
@@ -119,12 +133,12 @@ function addInvoices(invoices) {
 function fillFieldsInvoice(data) {
     invoiceFormPopUp();
 
-    var invoice = data.invoice;     // get invoice data
-    var details = data.details;     // get invoice details data
-    var client = invoice.client;    // get client data
+    var invoice = data.invoice; // get invoice data
+    var details = data.details; // get invoice details data
+    var client = invoice.client; // get client data
 
     var checkDisabled = false;
-    if ($('#paid').prop('checked')) {checkDisabled = true;}
+    if ($('#paid').prop('checked')) { checkDisabled = true; }
 
     // fill form with all data
     document.querySelector('#invoiceDate').valueAsDate = new Date(invoice.date);
@@ -141,7 +155,7 @@ function fillFieldsInvoice(data) {
 
     // add each invoice detail as a new line
     details.forEach(line => {
-        var article = line.article;     // get article data
+        var article = line.article; // get article data
 
         // add a new row and append each cell
         $('#invoice-lines').append($('<tr>')
@@ -163,7 +177,7 @@ function fillFieldsInvoice(data) {
  * Delete every line of the table invoices details
  */
 function cleanInvoiceDetails() {
-    $('#invoice-lines tr').each(function () {
+    $('#invoice-lines tr').each(function() {
         $(this).remove();
     });
 }
@@ -172,7 +186,7 @@ function cleanInvoiceDetails() {
  * Delete every line of the invoices table
  */
 function clearInvoicesTable() {
-    $('#invoices-lines tr').each(function () {
+    $('#invoices-lines tr').each(function() {
         $(this).remove();
     })
 }
