@@ -6,7 +6,7 @@ function init() {
     // check if new invoice button is pressed
     $('#newInvoice').click(()=> {
         invoiceFormPopUp();
-        addInvoiceDetailLine(); // add an empty line
+        addInvoiceDetailLine(); // add an empty line        
     });
 
     requestInvoices();
@@ -69,7 +69,10 @@ function addInvoiceDetailLine() {
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
             .append($('<td>').addClass('action')
-                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px')
+                    .click((ev)=> {
+                        $(ev.target).remove();
+                    }))
             )
         );
     }
@@ -136,8 +139,10 @@ function fillFieldsInvoice(data) {
     $('#town').text(client.town);
     $('#taxableBase').text(invoice.taxable_base);
     $('#total').text(invoice.total);
-    $('#ivaImport').text(invoice.iva);
-    $('#discountImport').text(invoice.discount);
+    $('#iva').text(invoice.iva);
+    $('#ivaImport').text(invoice.ivaImport);
+    $('#discount').text(invoice.discount);
+    $('#discountImport').text(invoice.discountImport);
 
     // add each invoice detail as a new line
     details.forEach(line => {

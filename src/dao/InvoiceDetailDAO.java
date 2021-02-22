@@ -21,7 +21,7 @@ public class InvoiceDetailDAO {
 			con = ConnectDB.connect();
 			// create the prepared statement
 			String query = "SELECT id.`id` AS 'invoice_detail_id', id.`line_number`, id.`total_articles`, id.`line_price`,"
-					+ " i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`discount`, i.`total`,"
+					+ " i.`id` AS 'invoice_id', i.`date`, i.`paid`, i.`taxable_base`, i.`iva`, i.`iva_import`, i.`discount`, i.`discount_import`, i.`total`,"
 					+ " a.`id` AS 'article_id', a.`code`, a.`name`, a.`price`,"
 					+ " c.`id` AS 'client_id', c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
 					+ " FROM `invoices_details` id"

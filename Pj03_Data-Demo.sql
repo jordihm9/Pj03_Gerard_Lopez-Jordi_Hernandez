@@ -34,10 +34,10 @@ INSERT INTO `clients` (`id`, `nif`, `name`, `lastname`, `address`, `town`)
 -- INVOICES
 -- --------------------------
 DELETE FROM `invoices`;
-INSERT INTO `invoices` (`id`, `date`, `paid`, `taxable_base`, `iva`, `discount`, `total`, `client_id`)
-	VALUES	(1, '2021-01-14', 1, 1282.03, 45.67, 0.0, 1298.35, 1),
-			(2, '2021-01-30', 0, 2955.35, 99.34, 110.00, 1867.34, 3),
-			(3, '2021-02-01', 1, 402.71, 76.41, 31.45, 458.44, 2)
+INSERT INTO `invoices` (`id`, `date`, `paid`, `taxable_base`, `iva`, `iva_import`, `discount`, `discount_import`, `total`, `client_id`)
+	VALUES	(1, '2021-01-14', 1, 1282.03, 45.67, 0.0, 0.0, 0.0, 1298.35, 1),
+			(2, '2021-01-30', 0, 2955.35, 99.34, 0.0, 110.00, 0.0, 1867.34, 3),
+			(3, '2021-02-01', 1, 402.71, 76.41, 0.0, 31.45, 0.0, 458.44, 2)
 ;
 
 -- --------------------------

@@ -17,7 +17,9 @@ public class Invoice {
     private boolean paid;
     private float taxable_base;
     private float iva;
+    private float ivaImport;
     private float discount;
+    private float discountImport;
     private float total;
     private Client client;
 
@@ -25,13 +27,15 @@ public class Invoice {
     	
     }
     
-    public Invoice(int id, Date date, boolean paid, float taxable_base, float iva, float discount, float total, Client client) {
+    public Invoice(int id, Date date, boolean paid, float taxable_base, float iva, float ivaImport, float discount, float discountImport, float total, Client client) {
         this.id = id;
         this.date = date;
         this.paid = paid;
         this.taxable_base = taxable_base;
         this.iva = iva;
+        this.ivaImport = ivaImport;
         this.discount = discount;
+        this.discountImport = discountImport;
         this.total = total;
         this.client = client;
     }
@@ -42,7 +46,9 @@ public class Invoice {
     	this.setPaid(resultset.getBoolean("paid"));
     	this.setTaxable_base(resultset.getFloat("taxable_base"));
     	this.setIva(resultset.getFloat("iva"));
+    	this.setIvaImport(resultset.getFloat("iva_import"));
     	this.setDiscount(resultset.getFloat("discount"));
+    	this.setDiscountImport(resultset.getFloat("discount_import"));
     	this.setTotal(resultset.getFloat("total"));
         
     	this.client = new Client(resultset);
@@ -54,7 +60,9 @@ public class Invoice {
     	this.setPaid(Boolean.getBoolean(request.getParameter("paid")));
     	this.setTaxable_base(Float.parseFloat(request.getParameter("taxable_base")));
     	this.setIva(Float.parseFloat(request.getParameter("iva")));
+    	this.setIvaImport(Float.parseFloat(request.getParameter("ivaImport")));
     	this.setDiscount(Float.parseFloat(request.getParameter("discount")));
+    	this.setDiscountImport(Float.parseFloat(request.getParameter("discountImport")));
     	this.setTotal(Float.parseFloat(request.getParameter("total")));
 
         int client_id = Integer.parseInt(request.getParameter("client_id"));
@@ -102,13 +110,29 @@ public class Invoice {
     public void setIva(float iva) {
         this.iva = iva;
     }
+    
+    public float getIvaImport() {
+    	return ivaImport;
+    }
 
+    public void setIvaImport(float ivaImport) {
+    	this.ivaImport = ivaImport;
+    }
+    
     public float getDiscount() {
         return discount;
     }
 
     public void setDiscount(float discount) {
         this.discount = discount;
+    }
+    
+    public float getDiscountImport() {
+        return discountImport;
+    }
+
+    public void setDiscountImport(float discountImport) {
+        this.discountImport = discountImport;
     }
 
     public float getTotal() {
