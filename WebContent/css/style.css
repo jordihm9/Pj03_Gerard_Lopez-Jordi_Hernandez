@@ -44,7 +44,7 @@ th {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 80%;
+	width: 60%;
 	min-height: 40rem;
 	padding: 3rem 5rem;
 	box-shadow: 0 0 15px 0 #000000;
@@ -72,6 +72,7 @@ th {
 	display: none;
 }
 
-/*#cancel{
-	background-color:blue;
-}*/
+.error {
+	background-color:rgba(236, 77, 77, 0.568);
+	border-color: red;
+}

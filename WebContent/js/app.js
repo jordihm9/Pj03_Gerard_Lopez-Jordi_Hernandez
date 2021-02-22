@@ -42,6 +42,8 @@ function invoiceFormPopUp() {
     // add line on add line click
     $('#add-line').click(addInvoiceDetailLine);
 
+    validateForm();
+
     function close() {
         // remove events listeners
         $('#cancel').off('click');
@@ -55,25 +57,22 @@ function invoiceFormPopUp() {
     }
 }
 
-/*function setAttributes() {
-    $("#nif").attr("pattern", "^[0-9]{8}[A-Za-z]$");
-    $("#code").attr("digit", "");
-}*/
-
 /**
  * Add an empty row at the bottom of the invoice details table
  */
 function addInvoiceDetailLine() {
-    $('#invoice-lines').append($('<tr>')
-        .append($('<td>').addClass('code text-center'))
-        .append($('<td>').addClass('article'))
-        .append($('<td>').addClass('units text-right'))
-        .append($('<td>').addClass('price text-right euro'))
-        .append($('<td>').addClass('subtotal text-right euro'))
-        .append($('<td>').addClass('action')
-            .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
-        )
-    );
+    if(!$('#paid').prop('checked')) {
+        $('#invoice-lines').append($('<tr>')
+            .append($('<td>').addClass('code text-center').attr('contenteditable','true'))
+            .append($('<td>').addClass('article'))
+            .append($('<td>').addClass('units text-right').attr('contenteditable','true'))
+            .append($('<td>').addClass('price text-right euro'))
+            .append($('<td>').addClass('subtotal text-right euro'))
+            .append($('<td>').addClass('action')
+                .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px'))
+            )
+        );
+    }
 }
 
 /**
@@ -124,10 +123,13 @@ function fillFieldsInvoice(data) {
     var details = data.details;     // get invoice details data
     var client = invoice.client;    // get client data
 
+    var checkDisabled = false;
+    if ($('#paid').prop('checked')) {checkDisabled = true;}
+
     // fill form with all data
     document.querySelector('#invoiceDate').valueAsDate = new Date(invoice.date);
     $('#invoiceId').text(invoice.id);
-    $('#paid').prop('checked', invoice.paid);
+    $('#paid').prop('checked', invoice.paid).prop('disabled', checkDisabled);
     $('#nif').text(client.nif);
     $('#clientName').text(client.name + ' ' + client.lastname);
     $('#address').text(client.address);

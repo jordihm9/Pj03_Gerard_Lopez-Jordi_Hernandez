@@ -22,6 +22,7 @@
 	<script src="js/jQuery341.js"></script>
 	<script src="js/requests.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/validations.js"></script>
     <!-- FONTS -->
 </head>
 
