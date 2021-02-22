@@ -18,6 +18,7 @@ function init() {
  * Turn them off when one of them has been activated.
  */
 function invoiceFormPopUp() {
+    resetInvoiceForm();
     $('#invoice-form').show(); // show form
 
     // event listeners to close the pop up
@@ -117,7 +118,7 @@ function addInvoices(invoices) {
                 .prop('checked', invoice.paid)
             ))
             .append($('<td>').addClass('client').text(invoice.client.lastname + ', ' + invoice.client.name))
-            .append($('<td>').addClass('taxablaIncome text-right euro').text(invoice.taxable_base))
+            .append($('<td>').addClass('taxableBase text-right euro').text(invoice.taxable_base))
             .append($('<td>').addClass('ivaImport text-right euro').text(invoice.iva))
             .append($('<td>').addClass('total text-right euro').text(invoice.total))
             .append($('<td>').addClass('actions')
@@ -188,6 +189,26 @@ function fillFieldsInvoice(data) {
 
     });
 
+}
+
+/**
+ * Reset the invoice form data
+ */
+function resetInvoiceForm() {
+    $('#invoiceId').text(null);
+    $('#invoiceDate').val(null);
+    $('#nif').text(null);
+    $('#clientName').text(null);
+    $('#address').text(null);
+    $('#town').text(null);
+    $('#totalArticles').text(null);
+    $('#discount').text(null);
+    $('#discountImport').text(null);
+    $('#iva').text(null);
+    $('#ivaImport').text(null);
+    $('#taxableBase').text(null);
+    $('#total').text(null);
+    cleanInvoiceDetails();
 }
 
 /**
