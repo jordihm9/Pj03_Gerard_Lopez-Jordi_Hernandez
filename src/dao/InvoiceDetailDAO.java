@@ -10,6 +10,12 @@ import models.Invoice;
 import models.InvoiceDetail;
 
 public class InvoiceDetailDAO {
+	/**
+	 * Select all the details from an invoice
+	 * @param id key from the invoice
+	 * @return
+	 * @throws SQLException
+	 */
 	public static ArrayList<InvoiceDetail> selectByInvoiceId(int id) throws SQLException {
 		ArrayList<InvoiceDetail> invoiceDetailList = new ArrayList<>();
 		Connection con = null;
@@ -48,5 +54,33 @@ public class InvoiceDetailDAO {
 		}
 		
 		return invoiceDetailList;
+	}
+	
+	/**
+	 * Delete all the invoices details related to an invoice (by ID)
+	 * @param id key from the invoice
+	 * @return
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("finally")
+	public static void deleteByInvoiceId(int id) throws SQLException {
+		Connection con = null;
+		PreparedStatement delete = null;
+		
+		try {
+			// connect to DB
+			con = ConnectDB.connect();
+			// create the prepared statement
+			String query = "DELETE FROM `invoices_details` WHERE `invoice_id` = ?;";
+			delete = con.prepareStatement(query);
+			// set values for prepared statement
+			delete.setInt(1, id);
+			// execute the statement
+			delete.executeUpdate();
+		}
+		finally {
+			con.close();
+			delete.close();
+		}
 	}
 }

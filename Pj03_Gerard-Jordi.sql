@@ -18,7 +18,7 @@ CREATE TABLE `clients` (
 	`id`		INT UNSIGNED	NOT NULL AUTO_INCREMENT,
 	`nif`		VARCHAR(9)		NOT NULL COMMENT '8 digits + 1 letter',
 	`name`		VARCHAR(25)		NOT NULL,
-	`lastname`	VARCHAR(25)		NOT NULL,
+	`lastname`	VARCHAR(25),
 	`address`	VARCHAR(50)		NOT NULL,
 	`town`		VARCHAR(25)		NOT NULL,
 

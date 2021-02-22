@@ -126,7 +126,7 @@ function addInvoices(invoices) {
                 .prop('checked', invoice.paid)
             ))
             .append($('<td>').addClass('client').text(invoice.client.lastname + ', ' + invoice.client.name))
-            .append($('<td>').addClass('taxableBase text-right euro').text(invoice.taxable_base))
+            .append($('<td>').addClass('taxableBase text-right euro').text(invoice.taxableBase))
             .append($('<td>').addClass('ivaImport text-right euro').text(invoice.iva))
             .append($('<td>').addClass('total text-right euro').text(invoice.total))
             .append($('<td>').addClass('actions')
@@ -173,7 +173,7 @@ function fillFieldsInvoice(data) {
     $('#clientName').text(client.name + ' ' + client.lastname);
     $('#address').text(client.address);
     $('#town').text(client.town);
-    $('#taxableBase').text(invoice.taxable_base);
+    $('#taxableBase').text(invoice.taxableBase);
     $('#total').text(invoice.total);
     $('#iva').text(invoice.iva);
     $('#ivaImport').text(invoice.ivaImport);

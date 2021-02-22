@@ -15,7 +15,7 @@ public class Invoice {
     private int id;
     private Date date;
     private boolean paid;
-    private float taxable_base;
+    private float taxableBase;
     private float iva;
     private float ivaImport;
     private float discount;
@@ -27,11 +27,11 @@ public class Invoice {
     	
     }
     
-    public Invoice(int id, Date date, boolean paid, float taxable_base, float iva, float ivaImport, float discount, float discountImport, float total, Client client) {
+    public Invoice(int id, Date date, boolean paid, float taxableBase, float iva, float ivaImport, float discount, float discountImport, float total, Client client) {
         this.id = id;
         this.date = date;
         this.paid = paid;
-        this.taxable_base = taxable_base;
+        this.taxableBase = taxableBase;
         this.iva = iva;
         this.ivaImport = ivaImport;
         this.discount = discount;
@@ -41,10 +41,14 @@ public class Invoice {
     }
     
     public Invoice(ResultSet resultset) throws SQLException {
-    	this.setId(resultset.getInt("invoice_id"));
+    	try {    		
+    		this.setId(resultset.getInt("invoice_id"));
+    	} catch (NumberFormatException e) {
+    		this.id = 0;
+    	}
     	this.setDate(resultset.getDate("date"));
     	this.setPaid(resultset.getBoolean("paid"));
-    	this.setTaxable_base(resultset.getFloat("taxable_base"));
+    	this.setTaxableBase(resultset.getFloat("taxable_base"));
     	this.setIva(resultset.getFloat("iva"));
     	this.setIvaImport(resultset.getFloat("iva_import"));
     	this.setDiscount(resultset.getFloat("discount"));
@@ -55,19 +59,22 @@ public class Invoice {
     }
     
     public Invoice(HttpServletRequest request) throws SQLException {
-    	this.setId(Integer.parseInt(request.getParameter("id")));
-    	this.setDate(Date.valueOf(request.getParameter("date")));
+    	try {    		
+    		this.setId(Integer.parseInt(request.getParameter("invoiceId")));
+    	} catch (NumberFormatException e) {
+    		this.id = 0;
+    	}
+    	this.setDate(Date.valueOf(request.getParameter("invoiceDate")));
     	this.setPaid(Boolean.getBoolean(request.getParameter("paid")));
-    	this.setTaxable_base(Float.parseFloat(request.getParameter("taxable_base")));
+    	this.setTaxableBase(Float.parseFloat(request.getParameter("taxableBase")));
     	this.setIva(Float.parseFloat(request.getParameter("iva")));
     	this.setIvaImport(Float.parseFloat(request.getParameter("ivaImport")));
     	this.setDiscount(Float.parseFloat(request.getParameter("discount")));
     	this.setDiscountImport(Float.parseFloat(request.getParameter("discountImport")));
     	this.setTotal(Float.parseFloat(request.getParameter("total")));
 
-        int client_id = Integer.parseInt(request.getParameter("client_id"));
-        this.client = ClientDAO.selectById(client_id);
-
+        // int client_id = Integer.parseInt(request.getParameter("client_id"));
+        // this.client = ClientDAO.selectById(client_id);
     }
     
 
@@ -95,12 +102,12 @@ public class Invoice {
         this.paid = paid;
     }
 
-    public float getTaxable_base() {
-        return taxable_base;
+    public float getTaxableBase() {
+        return taxableBase;
     }
 
-    public void setTaxable_base(float taxable_base) {
-        this.taxable_base = taxable_base;
+    public void setTaxableBase(float taxableBase) {
+        this.taxableBase = taxableBase;
     }
 
     public float getIva() {

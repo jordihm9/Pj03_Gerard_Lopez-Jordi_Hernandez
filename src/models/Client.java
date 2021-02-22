@@ -39,15 +39,13 @@ public class Client {
     }
     
     public Client(HttpServletRequest request) {
-    	this.setId(Integer.parseInt(request.getParameter("id")));
     	this.setNif(request.getParameter("nif"));
-    	this.setName(request.getParameter("name"));
-    	this.setLastname(request.getParameter("lastname"));
+    	this.setName(request.getParameter("clientName"));
+    	// this.setLastname(request.getParameter("lastname"));
     	this.setAddress(request.getParameter("address"));
     	this.setTown(request.getParameter("town"));
     }
     
-
     public int getId() {
         return id;
     }

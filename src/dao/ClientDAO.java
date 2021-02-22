@@ -24,7 +24,8 @@ public class ClientDAO {
 			con = ConnectDB.connect();
 			// create the prepared statement
 			String query = "SELECT c.`id` as 'client_id', c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
-					+ " FROM `clients` c WHERE `id` = ?";
+					+ " FROM `clients` c"
+					+ " WHERE c.`id` = ?;";
 			select = con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setInt(1, id);
@@ -62,7 +63,8 @@ public class ClientDAO {
 			con = ConnectDB.connect();
 			// create the prepared statement
 			String query = "SELECT c.`id` AS `client_id`, c.`nif`, c.`name`, c.`lastname`, c.`address`, c.`town`"
-					+ "FROM `clients` WHERE `nif` = ?";
+					+ " FROM `clients` c"
+					+ " WHERE c.`nif` = ?;";
 			select = con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setString(1, nif);
@@ -82,5 +84,30 @@ public class ClientDAO {
 		}
 		
 		return null;
+	}
+	
+	public static void insert(Client client) throws SQLException {
+		Connection con = null;
+		PreparedStatement insert = null;
+		
+		try {
+			// connect to DB
+			con = ConnectDB.connect();
+			// create the prepared statement
+			String query = "INSERT INTO `clients` (`nif`, `name`, `lastname`, `address`, `town`)"
+					+ " VALUES (?, ?, ?, ?, ?);";
+			insert = con.prepareStatement(query);
+			// set the values for the prepared statement
+			insert.setString(1, client.getNif());
+			insert.setString(2, client.getName());
+			insert.setString(3, client.getLastname());
+			insert.setString(4, client.getAddress());
+			insert.setString(5, client.getTown());
+			// execute the statement
+			insert.executeUpdate();
+		}
+		finally {
+			con.close();
+		}
 	}
 }

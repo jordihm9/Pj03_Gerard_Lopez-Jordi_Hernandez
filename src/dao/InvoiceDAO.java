@@ -91,6 +91,41 @@ public class InvoiceDAO {
 	}
 	
 	/**
+	 * Insert a new invoice
+	 * @param invoice
+	 * @throws SQLException
+	 */
+	public static void insert(Invoice invoice) throws SQLException {
+		Connection con = null;
+		PreparedStatement insert = null;
+		
+		try {
+			// connect to DB
+			con = ConnectDB.connect();
+			// create prepared statement
+			String query = "INSERT INTO `invoices` (`date`, `paid`, `taxable_base`, `iva`, `iva_import`, `discount`, `discount_import`, `total`, `client_id`)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			insert = con.prepareStatement(query);
+			// set values for the prepared statement
+			insert.setDate(1, invoice.getDate());
+			insert.setBoolean(2, invoice.isPaid());
+			insert.setDouble(3, invoice.getTaxableBase());
+			insert.setFloat(4,  invoice.getIva());
+			insert.setFloat(5, invoice.getIvaImport());
+			insert.setFloat(6, invoice.getDiscount());
+			insert.setFloat(7, invoice.getDiscountImport());
+			insert.setFloat(8, invoice.getTotal());
+			insert.setInt(9, invoice.getClient().getId());
+			// execute the insert
+			insert.executeUpdate();
+		}
+		finally {
+			con.close();
+			insert.close();
+		}
+	}
+	
+	/**
 	 * Delete an invoice by ID
 	 * @param id
 	 * @throws SQLException
