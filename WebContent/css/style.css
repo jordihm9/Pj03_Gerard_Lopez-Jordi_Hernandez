@@ -1,78 +1,85 @@
 *,
 button {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 table {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 
 th,
 td {
-	border: 2px solid black;
-	padding: 0.75rem 1.5rem;
+    border: 2px solid black;
+    padding: 0.75rem 1.5rem;
 }
 
 th {
-	background: rgb(179, 179, 179);
+    background: rgb(179, 179, 179);
 }
 
 .container {
-	padding: 1rem 2rem;
+    padding: 1rem 2rem;
 }
 
 .no-border {
-	border: none !important;
+    border: none !important;
 }
 
 .outer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .blured {
-	background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .center {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 60%;
-	min-height: 40rem;
-	padding: 3rem 5rem;
-	box-shadow: 0 0 15px 0 #000000;
-	background: #ffffff;
+    display: flex;
+    position: absolute;
+    margin: auto;
+    margin-top: 2rem;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    width: 80%;
+    height: auto;
+    padding: 3rem 5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px 0 #000000;
+    background: #ffffff;
 }
 
 .text-center {
-	text-align: center;
+    text-align: center;
 }
 
 .text-right {
-	text-align: right;
+    text-align: right;
 }
 
 .euro::after {
-	content: '€';
+    content: '€';
 }
 
 .percentage::after {
-	content: '%';
+    content: '%';
 }
 
+
 /* hidden by default */
+
 #invoice-form {
-	display: none;
+    display: none;
 }
 
 .error {
-	background-color:rgba(236, 77, 77, 0.568);
-	border-color: red;
+    background-color: rgba(236, 77, 77, 0.568);
+    border-color: red;
 }
