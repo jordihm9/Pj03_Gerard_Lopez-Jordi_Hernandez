@@ -206,6 +206,7 @@ function fillFieldsInvoice(data) {
                 .on("input propertychange", function() {
                     validateEmpties(this);
                     recalculateSubtotalOnChange(this);
+                    requestArticle($(this).parent());
                 }))
             .append($('<td>').addClass('article').text(article.name))
             .append($('<td>').addClass('units text-right').text(line.totalArticles)
