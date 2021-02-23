@@ -1,5 +1,48 @@
 'use strict'
 
+function sendInvoice(data) {
+    $.ajax({
+        type: "POST",
+        url: "invoice/save",
+        data: data,
+        dataType: "HTML",
+        success: function (data, textStatus, xhr) {
+            console.log("Invoice saved successfully.");
+        },
+        error: function(data) {
+            console.log("Invoice could not have been saved.");
+        }
+    });
+}
+
+function sendInvoiceDetail(data) {
+    $.ajax({
+        type: "POST",
+        url: "invoice-detail/save",
+        data: data,
+        dataType: "HTML",
+        success: function (response) {
+            console.log("Detail saved successfully.");
+        },
+        error: function(data) {
+            console.log("Detail could not have been saved.");
+        }
+    });
+}
+
+function getNewId() {
+    $.ajax({
+        type: "POST",
+        url: "invoice/selectMax",
+        success: function (data, textStatus, xhr) {
+            $('#invoiceId').text(data+1);
+        },
+        error: function (response) {
+            $('#invoiceId').text(1);
+        }
+    });
+}
+
 /**
  * Send ajax request to get a list of invoices
  */

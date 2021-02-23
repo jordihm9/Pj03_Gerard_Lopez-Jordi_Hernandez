@@ -7,6 +7,7 @@ function init() {
     $('#newInvoice').click(() => {
         invoiceFormPopUp();
         addInvoiceDetailLine(); // add an empty line        
+        getNewId();
     });
 
     requestInvoices();
@@ -43,7 +44,7 @@ function invoiceFormPopUp() {
     // add line on add line click
     $('#add-line').click(addInvoiceDetailLine);
 
-    //validateForm();
+    validateForm();
 
     //add content editable and today's date
     addContentEditable();
