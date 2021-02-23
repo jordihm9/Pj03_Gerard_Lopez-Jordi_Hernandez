@@ -89,6 +89,7 @@ function addInvoiceDetailLine() {
                 .on("input propertychange", function() {
                     validateEmpties(this);
                     recalculateSubtotalOnChange(this);
+                    recalculateTotal();
                 }))
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
@@ -212,6 +213,7 @@ function fillFieldsInvoice(data) {
                 .on("input propertychange", function() {
                     validateEmpties(this);
                     recalculateSubtotalOnChange(this);
+                    recalculateTotal();
                 }))
             .append($('<td>').addClass('price text-right euro').text(article.price))
             .append($('<td>').addClass('subtotal text-right euro').text(line.linePrice))
@@ -223,6 +225,7 @@ function fillFieldsInvoice(data) {
 
     });
     recalculateSubtotal();
+    recalculateTotal();
 
 }
 
@@ -294,4 +297,19 @@ function recalculateSubtotal(){
     totalArticles.text(total.toFixed(2));
     if(isNaN(total)) totalArticles.text("0");
     
+}
+
+/**
+ * Calculate total invoice price
+ */
+function recalculateTotal(){
+    var totalArticles = $('#totalArticles').text();
+    var iva = $('#iva').text();
+    var discount = $('#discount').text();
+
+    var ivaPrice = $('#ivaImport').text(((totalArticles * iva) / 100).toFixed(2));
+    var taxableBase = $('#taxableBase').text((parseFloat(ivaPrice.text()) + parseFloat(totalArticles)).toFixed(2));
+    var discountImport = $('#discountImport').text(((parseFloat(totalArticles) * parseFloat(discount)) / 100).toFixed(2));
+    
+    $('#total').text((parseFloat(taxableBase.text()) + parseFloat(discountImport.text())).toFixed(2));
 }
