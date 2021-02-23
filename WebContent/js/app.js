@@ -68,15 +68,16 @@ function addInvoiceDetailLine() {
     if (!$('#paid').prop('checked')) {
         $('#invoice-lines').append($('<tr>')
             .append($('<td>').addClass('code text-center').attr('contenteditable', 'true')
+                .attr('required', '')
                 .on("input propertychange", function() {
-                    console.log("canvia");
                     validateEmpties(this);
                 }))
             .append($('<td>').addClass('article'))
             .append($('<td>').addClass('units text-right').attr('contenteditable', 'true')
+                .attr('type', 'number')
                 .on("input propertychange", function() {
-                    console.log("canvia");
                     validateEmpties(this);
+                    recalculatePrices(this);
                 }))
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
@@ -105,11 +106,13 @@ function removeInvoiceDetailLine(ev) {
  * Add contenteditable attribute in the create invoice option
  */
 function addContentEditable() {
-    document.querySelector('#invoiceDate').valueAsDate = new Date();
-    $('#nif').attr('contenteditable', true);
-    $('#clientName').attr('contenteditable', true);
-    $('#address').attr('contenteditable', true);
-    $('#town').attr('contenteditable', true);
+    if (!$('#paid').prop('checked')) {
+        document.querySelector('#invoiceDate').valueAsDate = new Date();
+        $('#nif').attr('contenteditable', true);
+        $('#clientName').attr('contenteditable', true);
+        $('#address').attr('contenteditable', true);
+        $('#town').attr('contenteditable', true);
+    }
 }
 
 /**
@@ -186,9 +189,18 @@ function fillFieldsInvoice(data) {
 
         // add a new row and append each cell
         $('#invoice-lines').append($('<tr>')
-            .append($('<td>').addClass('code text-center').text(article.code))
+            .append($('<td>').addClass('code text-center').text(article.code)
+                .attr('contenteditable',!invoice.paid)
+                .on("input propertychange", function() {
+                    validateEmpties(this);
+                }))
             .append($('<td>').addClass('article').text(article.name))
-            .append($('<td>').addClass('units text-right').text(line.total_articles))
+            .append($('<td>').addClass('units text-right').text(line.total_articles)
+                .attr('contenteditable',!invoice.paid)
+                .on("input propertychange", function() {
+                    validateEmpties(this);
+                    recalculatePrices(this);
+                }))
             .append($('<td>').addClass('price text-right euro').text(article.price))
             .append($('<td>').addClass('subtotal text-right euro').text(line.line_price))
             .append($('<td>').addClass('action')
@@ -237,4 +249,22 @@ function clearInvoicesTable() {
     $('#invoices-lines tr').each(function() {
         $(this).remove();
     })
+}
+
+
+/**
+ * Calculate total articles price
+ */
+function recalculatePrices(val){
+    var subtotal = $(val).parents("tr").find(".subtotal");
+    var total = $('#totalArticles');
+    total.text("0");
+    subtotal.text(parseFloat($(val).parents("tr").find(".price").text()) * parseFloat($(val).text()).toFixed(2));
+    if(subtotal.text() == 'NaN') subtotal.text("0");
+    
+    
+    subtotal.on("input propertychange",function(){
+        console.log("subtotal canviat!");
+    });
+    
 }
