@@ -155,4 +155,38 @@ public class InvoiceDAO {
 			return deleteOk;
 		}
 	}
+	
+	/**
+	 * Return max of id's invoice
+	 * @throws SQLException
+	 */
+	public static int selectMaxID() throws SQLException {
+		int maxId = 0;
+		Connection con = null;
+		Statement select = null;
+		ResultSet rs = null;
+		
+		try {
+			// connect to DB
+			con = ConnectDB.connect();
+			// create the statement
+			select = con.createStatement();
+			// set the statement
+			String query = "SELECT max(`id`) FROM `invoices`";
+			// execute the statement
+			rs = select.executeQuery(query);
+			
+			// add every result to the list
+			if (rs.next()) {
+				maxId = rs.getInt(1);
+			}
+		}
+		finally {
+			con.close();
+			select.close();
+			rs.close();
+		}
+		
+		return maxId;
+	}
 }
