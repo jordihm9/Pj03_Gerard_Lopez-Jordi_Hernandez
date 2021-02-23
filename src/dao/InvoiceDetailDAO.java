@@ -57,6 +57,37 @@ public class InvoiceDetailDAO {
 	}
 	
 	/**
+	 * Insert a new invoice detail to DB
+	 * @param detail
+	 * @throws SQLException
+	 */
+	public static void insert(InvoiceDetail detail) throws SQLException {
+		Connection con = null;
+		PreparedStatement insert = null;
+		
+		try {
+			// connect to DB
+			con = ConnectDB.connect();
+			// created the prepared statement
+			String query = "INSERT INTO `invoices_details` (`line_number`, `total_articles`, `line_price`, `article_id`, `invoice_id`)"
+					+ " VALUES (?, ?, ?, ?, ?);";
+			insert = con.prepareStatement(query);
+			// set values for the prepared statement
+			insert.setInt(1, detail.getLineNumber());
+			insert.setInt(2, detail.getTotalArticles());
+			insert.setFloat(3, detail.getLinePrice());
+			insert.setInt(4, detail.getArticle().getId());
+			insert.setInt(5, detail.getInvoice().getId());
+			// execute the insert statement
+			insert.executeUpdate();
+		}
+		finally {
+			con.close();
+			insert.close();
+		}
+	}
+	
+	/**
 	 * Delete all the invoices details related to an invoice (by ID)
 	 * @param id key from the invoice
 	 * @return

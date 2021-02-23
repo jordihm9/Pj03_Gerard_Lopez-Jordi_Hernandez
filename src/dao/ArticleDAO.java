@@ -25,7 +25,7 @@ public class ArticleDAO {
 			// create the prepared statement
 			String query = "SELECT a.`id` AS 'article_id', a.`code`, a.`name`, a.`price` "
 					+ " FROM `articles` a"
-					+ " WHERE `id` = ?;";
+					+ " WHERE a.`id` = ?;";
 			select = (PreparedStatement) con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setInt(1, id);
@@ -64,7 +64,7 @@ public class ArticleDAO {
 			// create the prepared statement
 			String query = "SELECT a.`id` AS 'article_id', a.`code`, a.`name`, a.`price`"
 					+ " FROM `articles` a"
-					+ " WHERE `code` = ?;";
+					+ " WHERE a.`code` = ?;";
 			select = (PreparedStatement) con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setString(1, code);

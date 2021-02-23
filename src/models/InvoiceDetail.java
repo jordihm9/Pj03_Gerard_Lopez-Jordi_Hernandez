@@ -14,9 +14,9 @@ import dao.InvoiceDAO;
 public class InvoiceDetail {
 
     private int id;
-    private int line_number;
-    private int total_articles;
-    private float line_price;
+    private int lineNumber;
+    private int totalArticles;
+    private float linePrice;
     private Article article;
     private Invoice invoice;
       
@@ -24,36 +24,35 @@ public class InvoiceDetail {
     	
     }
 
-    public InvoiceDetail(int id, int line_number, int total_articles, float line_price, Article article, Invoice invoice) {
+    public InvoiceDetail(int id, int lineNumber, int totalArticles, float linePrice, Article article, Invoice invoice) {
         this.id = id;
-        this.line_number = line_number;
-        this.total_articles = total_articles;
-        this.line_price = line_price;
+        this.lineNumber = lineNumber;
+        this.totalArticles = totalArticles;
+        this.linePrice = linePrice;
         this.article = article;
         this.invoice = invoice;
     }
     
     public InvoiceDetail(ResultSet resultSet) throws SQLException {
     	this.setId(resultSet.getInt("invoice_detail_id"));
-    	this.setLine_number(resultSet.getInt("line_number"));
-    	this.setTotal_articles(resultSet.getInt("total_articles"));
-    	this.setLine_price(resultSet.getFloat("line_price"));
+    	this.setLineNumber(resultSet.getInt("line_number"));
+    	this.setTotalArticles(resultSet.getInt("total_articles"));
+    	this.setLinePrice(resultSet.getFloat("line_price"));
 
         this.article = new Article(resultSet);
         this.invoice = new Invoice(resultSet);
     }
     
     public InvoiceDetail(HttpServletRequest request) throws SQLException {
-    	this.setId(Integer.parseInt(request.getParameter("id")));
-    	this.setLine_number(Integer.parseInt(request.getParameter("line_number")));
-    	this.setTotal_articles(Integer.parseInt(request.getParameter("total_articles")));
-    	this.setLine_price(Float.parseFloat(request.getParameter("line_price")));
+    	this.setLineNumber(Integer.parseInt(request.getParameter("lineNumber")));
+    	this.setTotalArticles(Integer.parseInt(request.getParameter("totalArticles")));
+    	this.setLinePrice(Float.parseFloat(request.getParameter("linePrice")));
     	
-    	int article_id = Integer.parseInt(request.getParameter("article_id"));
-    	this.article = ArticleDAO.selectById(article_id);
+    	String articleCode = request.getParameter("articleCode");
+    	this.article = ArticleDAO.selectByCode(articleCode);
     	
-    	int invoice_id = Integer.parseInt(request.getParameter("invoice_id"));
-    	this.invoice = InvoiceDAO.selectById(invoice_id);
+    	int invoiceId = Integer.parseInt(request.getParameter("invoiceId"));
+    	this.invoice = InvoiceDAO.selectById(invoiceId);
     }
 
     public int getId() {
@@ -64,28 +63,28 @@ public class InvoiceDetail {
         this.id = id;
     }
 
-    public int getLine_number() {
-        return line_number;
+    public int getLineNumber() {
+        return lineNumber;
     }
 
-    public void setLine_number(int line_number) {
-        this.line_number = line_number;
+    public void setLineNumber(int line_number) {
+        this.lineNumber = line_number;
     }
 
-    public int getTotal_articles() {
-        return total_articles;
+    public int getTotalArticles() {
+        return totalArticles;
     }
 
-    public void setTotal_articles(int total_articles) {
-        this.total_articles = total_articles;
+    public void setTotalArticles(int total_articles) {
+        this.totalArticles = total_articles;
     }
 
-    public float getLine_price() {
-        return line_price;
+    public float getLinePrice() {
+        return linePrice;
     }
 
-    public void setLine_price(float line_price) {
-        this.line_price = line_price;
+    public void setLinePrice(float line_price) {
+        this.linePrice = line_price;
     }
 
     public Article getArticle() {
