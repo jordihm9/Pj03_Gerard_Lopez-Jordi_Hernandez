@@ -88,7 +88,7 @@ function addInvoiceDetailLine() {
                 .attr('type', 'number')
                 .on("input propertychange", function() {
                     validateEmpties(this);
-                    recalculatePrices(this);
+                    recalculateSubtotalOnChange(this);
                 }))
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
@@ -204,13 +204,14 @@ function fillFieldsInvoice(data) {
                 .attr('contenteditable',!invoice.paid)
                 .on("input propertychange", function() {
                     validateEmpties(this);
+                    recalculateSubtotalOnChange(this);
                 }))
             .append($('<td>').addClass('article').text(article.name))
             .append($('<td>').addClass('units text-right').text(line.total_articles)
                 .attr('contenteditable',!invoice.paid)
                 .on("input propertychange", function() {
                     validateEmpties(this);
-                    recalculatePrices(this);
+                    recalculateSubtotalOnChange(this);
                 }))
             .append($('<td>').addClass('price text-right euro').text(article.price))
             .append($('<td>').addClass('subtotal text-right euro').text(line.line_price))
@@ -221,6 +222,7 @@ function fillFieldsInvoice(data) {
         );
 
     });
+    recalculateSubtotal();
 
 }
 
@@ -264,18 +266,30 @@ function clearInvoicesTable() {
 
 
 /**
- * Calculate total articles price
+ * Calculate total articles price on change
  */
-function recalculatePrices(val){
+function recalculateSubtotalOnChange(val){
     var subtotal = $(val).parents("tr").find(".subtotal");
     var total = $('#totalArticles');
     total.text("0");
     subtotal.text(parseFloat($(val).parents("tr").find(".price").text()) * parseFloat($(val).text()).toFixed(2));
-    if(subtotal.text() == 'NaN') subtotal.text("0");
+    if(isNaN(subtotal.text())) subtotal.text("0");
     
-    
-    subtotal.on("input propertychange",function(){
-        console.log("subtotal canviat!");
+    var totalCalculated = 0;
+    $('.subtotal').each(function() {
+        totalCalculated += parseFloat($(this).text());
     });
+    total.text(totalCalculated);
+}
+
+/**
+ * Calculate total articles price
+ */
+function recalculateSubtotal(){
+    var totalArticles = 0;
+    $('#invoice-lines tr').each(function(index){
+        totalArticles += parseFloat($(this).find('.subtotal').text()); 
+    })
+    $('#totalArticles').text(totalArticles.toFixed(2));
     
 }
