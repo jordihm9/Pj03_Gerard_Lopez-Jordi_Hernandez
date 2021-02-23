@@ -1,56 +1,46 @@
 'use strict'
 
 function validateForm() {
-    var code = $(".code");
-    /*code.addClass("error").change(function (ev) {
-        ev.stopPropagation();
-        ev.stopImmediatePropagation();
-        // send request to get all information from the current invoice
-        validateCode(code);
-    });*/
-    //code.blur(validateCode(code));
-
-
     $("#send").click(function() {
-        validateEmpties($("#nif"));
+        console.log("click send");
+        var nif = $("#nif");
+        var name = $("#clientName");
+        var town = $("#town");
+        var address = $("#address");
+
+        if (nif.val() == "" || name.val() == "" || town.val() == "" || address.val() == "") {
+            console.log("uep");
+            nif.removeClass("error").addClass("error");
+            name.removeClass("error").addClass("error");
+            town.removeClass("error").addClass("error");
+            address.removeClass("error").addClass("error");
+        }
+        if ($(":input").hasClass("error")) {
+            alert("false");
+        } else {
+            alert("true");
+        }
     });
-    /*$("#send").click(validateEmpties($("#clientName")));
-    $("#send").click(validateEmpties($("#address")));
-    $("#send").click(validateEmpties($("#town")));
-    $("#send").click(validateCode(code));*/
-}
-
-function validateEmpties(field){
-    if(field.val() == "") {
-        field.addClass("error");
-        return false;
-    } else {
-        console.log("esta be");
-        field.removeClass("error");
-        return true;
-    }      
-
 }
 
 
-function validateCode(code){
-    console.log(code.text());
-    if(code.text() == ""){
-        code.addClass("error");
+function validateEmpties(field) {
+    if ($(field).text() == "") {
+        $(field).addClass("error");
         return false;
     } else {
-        code.removeClass("error");
+        $(field).removeClass("error");
         return true;
     }
 }
 
-function validar() {
-    var nom = $("#clientName");
-    if(nom.val() == ""){
-        nom.addClass("error");
+
+function validateCode(code) {
+    if ($(code).val() == "") {
+        $(code).addClass("error");
         return false;
     } else {
-        nom.removeClass("error");
+        $(code).removeClass("error");
         return true;
     }
 }
