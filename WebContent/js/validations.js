@@ -25,7 +25,7 @@ function validateForm() {
 
 
 function validateEmpties(field) {
-    if ($(field).text() == "" || $(field).text() == "0") {
+    if ($(field).text() == "" || $(field).text() == "0" || isNaN($(field).text())) {
         $(field).addClass("error");
         return false;
     } else {
