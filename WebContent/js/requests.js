@@ -85,3 +85,38 @@ function requestClient(nif) {
         }
     });
 }
+
+function requestArticle(row) {
+    // get the code from the code column
+    let code = $(row).find('.code').text();
+
+    $.ajax({
+        type: "POST",
+        url: "article/select",
+        data: {"code": code},
+        dataType: "HTML",
+        success: function (data, textStatus, xhr) {
+            // if status code is 204, means article was not found
+            if (xhr.status === 204) {
+                // no article returned
+                console.log("Article was not found");
+                // add warning class to code cell
+                $(row).find('.code').addClass('error');
+            } else if (xhr.status === 200) {
+                let article = JSON.parse(data); // cast json response to js object
+                
+                // fill the fields with article information
+                $(row).find('.code').text(article.code);
+                $(row).find('.article').text(article.name);
+                $(row).find('.price').text(article.price);
+
+                // remove warning class
+                $(row).find('.code').removeClass('error');
+            }
+        },
+        error: function(response) {
+            // add warning class to code cell
+            $(row).find('.code').addClass('error');
+        }
+    });
+}

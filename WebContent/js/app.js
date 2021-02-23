@@ -81,6 +81,7 @@ function addInvoiceDetailLine() {
                 .attr('required', '')
                 .on("input propertychange", function() {
                     validateEmpties(this);
+                    requestArticle($(this).parent());
                 }))
             .append($('<td>').addClass('article'))
             .append($('<td>').addClass('units text-right').attr('contenteditable', 'true')
