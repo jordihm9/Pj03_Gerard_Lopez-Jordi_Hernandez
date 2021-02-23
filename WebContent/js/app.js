@@ -286,10 +286,12 @@ function recalculateSubtotalOnChange(val){
  * Calculate total articles price
  */
 function recalculateSubtotal(){
-    var totalArticles = 0;
+    var total = 0;
+    var totalArticles = $('#totalArticles');
     $('#invoice-lines tr').each(function(index){
-        totalArticles += parseFloat($(this).find('.subtotal').text()); 
+        total += parseFloat($(this).find('.subtotal').text()); 
     })
-    $('#totalArticles').text(totalArticles.toFixed(2));
+    totalArticles.text(total.toFixed(2));
+    if(isNaN(total)) totalArticles.text("0");
     
 }
