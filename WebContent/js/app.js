@@ -82,18 +82,14 @@ function addInvoiceDetailLine() {
                 .on("input propertychange", function() {
                     validateEmpties(this);
                     requestArticle($(this).parent());
-                    recalculateSubtotalOnChange(this);
-                    recalculateSubtotal();
-                    recalculateTotal();
+                    recalculateLine(this);
                 }))
             .append($('<td>').addClass('article'))
             .append($('<td>').addClass('units text-right').attr('contenteditable', 'true')
                 .attr('type', 'number')
                 .on("input propertychange", function() {
                     validateEmpties(this);
-                    recalculateSubtotalOnChange(this);
-                    recalculateSubtotal();
-                    recalculateTotal();
+                    recalculateLine(this);
                 }))
             .append($('<td>').addClass('price text-right euro'))
             .append($('<td>').addClass('subtotal text-right euro'))
@@ -102,6 +98,7 @@ function addInvoiceDetailLine() {
                     .on('click', function(ev) { recalculateTotal(); removeInvoiceDetailLine(ev);}))
             )
         );
+    recalculateTotal();
     }
 }
 
@@ -209,19 +206,15 @@ function fillFieldsInvoice(data) {
                 .attr('contenteditable',!invoice.paid)
                 .on("input propertychange", function() {
                     validateEmpties(this);
-                    recalculateSubtotalOnChange(this);
-                    recalculateSubtotal();
-                    recalculateTotal();
                     requestArticle($(this).parent());
+                    recalculateLine(this);
                 }))
             .append($('<td>').addClass('article').text(article.name))
             .append($('<td>').addClass('units text-right').text(line.totalArticles)
                 .attr('contenteditable',!invoice.paid)
                 .on("input propertychange", function() {
                     validateEmpties(this);
-                    recalculateSubtotalOnChange(this);
-                    recalculateSubtotal();
-                    recalculateTotal();
+                    recalculateLine(this);
                 }))
             .append($('<td>').addClass('price text-right euro').text(article.price))
             .append($('<td>').addClass('subtotal text-right euro').text(line.linePrice))
@@ -233,8 +226,6 @@ function fillFieldsInvoice(data) {
 
     });
     recalculateSubtotal();
-    recalculateTotal();
-
 }
 
 /**
@@ -279,19 +270,15 @@ function clearInvoicesTable() {
 /**
  * Calculate total articles price on change
  */
-function recalculateSubtotalOnChange(val){
+function recalculateLine(val){
     var subtotal = $(val).parents("tr").find(".subtotal");
     var qtt = $(val).parents("tr").find(".units");
-    var total = $('#totalArticles');
+    var price = $(val).parents("tr").find(".price");
 
-    subtotal.text(parseFloat($(val).parents("tr").find(".price").text()) * parseFloat($(qtt).text()).toFixed(2));
+    subtotal.text(parseFloat(price.text()) * parseFloat($(qtt).text()).toFixed(2));
     if(isNaN(subtotal.text())) subtotal.text("0");
     
-    var totalCalculated = 0;
-    $('.subtotal').each(function() {
-        totalCalculated += parseFloat($(qtt).text());
-    });
-    total.text(totalCalculated.toFixed(2));
+    recalculateSubtotal();
 }
 
 /**
@@ -305,6 +292,8 @@ function recalculateSubtotal(){
     })
     totalArticles.text(total.toFixed(2));
     if(isNaN(total)) totalArticles.text("0");
+    
+    recalculateTotal();
     
 }
 
