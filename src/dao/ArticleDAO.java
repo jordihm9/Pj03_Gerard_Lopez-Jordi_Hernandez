@@ -23,7 +23,9 @@ public class ArticleDAO {
 			// connect to DB
 			con = ConnectDB.connect();
 			// create the prepared statement
-			String query = "SELECT * FROM `articles` WHERE `id` = ?";
+			String query = "SELECT a.`id` AS 'article_id', a.`code`, a.`name`, a.`price` "
+					+ " FROM `articles` a"
+					+ " WHERE `id` = ?;";
 			select = (PreparedStatement) con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setInt(1, id);
@@ -60,7 +62,9 @@ public class ArticleDAO {
 			// connect to DB
 			con = ConnectDB.connect();
 			// create the prepared statement
-			String query = "SELECT * FROM `articles` WHERE `code` = ?";
+			String query = "SELECT a.`id` AS 'article_id', a.`code`, a.`name`, a.`price`"
+					+ " FROM `articles` a"
+					+ " WHERE `code` = ?;";
 			select = (PreparedStatement) con.prepareStatement(query);
 			// set the value for the prepared statement
 			select.setString(1, code);
