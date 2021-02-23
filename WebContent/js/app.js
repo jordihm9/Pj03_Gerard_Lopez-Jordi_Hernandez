@@ -207,14 +207,14 @@ function fillFieldsInvoice(data) {
                     recalculateSubtotalOnChange(this);
                 }))
             .append($('<td>').addClass('article').text(article.name))
-            .append($('<td>').addClass('units text-right').text(line.total_articles)
+            .append($('<td>').addClass('units text-right').text(line.totalArticles)
                 .attr('contenteditable',!invoice.paid)
                 .on("input propertychange", function() {
                     validateEmpties(this);
                     recalculateSubtotalOnChange(this);
                 }))
             .append($('<td>').addClass('price text-right euro').text(article.price))
-            .append($('<td>').addClass('subtotal text-right euro').text(line.line_price))
+            .append($('<td>').addClass('subtotal text-right euro').text(line.linePrice))
             .append($('<td>').addClass('action')
                 .append($('<img>').addClass('delete-icon').prop('src', './img/delete.svg').height('20px')
                     .on('click', function(ev) { removeInvoiceDetailLine(ev); }))
