@@ -125,6 +125,8 @@ function addContentEditable() {
         $('#clientName').attr('contenteditable', true);
         $('#address').attr('contenteditable', true);
         $('#town').attr('contenteditable', true);
+        $('#iva').attr('contenteditable', true);
+        $('#discount').attr('contenteditable', true);
     }
 }
 
@@ -239,9 +241,9 @@ function resetInvoiceForm() {
     $('#address').text(null);
     $('#town').text(null);
     $('#totalArticles').text(null);
-    $('#discount').text(null);
+    $('#discount').text("0");
     $('#discountImport').text(null);
-    $('#iva').text(null);
+    $('#iva').text("0");
     $('#ivaImport').text(null);
     $('#taxableBase').text(null);
     $('#total').text(null);
@@ -270,7 +272,7 @@ function clearInvoicesTable() {
 /**
  * Calculate total articles price on change
  */
-function recalculateLine(val){
+function recalculateLine(val){    
     var subtotal = $(val).parents("tr").find(".subtotal");
     var qtt = $(val).parents("tr").find(".units");
     var price = $(val).parents("tr").find(".price");
