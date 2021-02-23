@@ -212,6 +212,7 @@ function fillFieldsInvoice(data) {
                     recalculateSubtotalOnChange(this);
                     recalculateSubtotal();
                     recalculateTotal();
+                    requestArticle($(this).parent());
                 }))
             .append($('<td>').addClass('article').text(article.name))
             .append($('<td>').addClass('units text-right').text(line.totalArticles)
@@ -282,7 +283,7 @@ function recalculateSubtotalOnChange(val){
     var subtotal = $(val).parents("tr").find(".subtotal");
     var qtt = $(val).parents("tr").find(".units");
     var total = $('#totalArticles');
-    total.text("0");
+
     subtotal.text(parseFloat($(val).parents("tr").find(".price").text()) * parseFloat($(qtt).text()).toFixed(2));
     if(isNaN(subtotal.text())) subtotal.text("0");
     
