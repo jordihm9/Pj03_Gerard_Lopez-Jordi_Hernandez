@@ -279,7 +279,7 @@ function recalculateSubtotalOnChange(val){
     $('.subtotal').each(function() {
         totalCalculated += parseFloat($(this).text());
     });
-    total.text(totalCalculated);
+    total.text(totalCalculated.toFixed(2));
 }
 
 /**
