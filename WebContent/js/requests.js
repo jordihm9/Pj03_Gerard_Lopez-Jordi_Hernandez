@@ -61,3 +61,27 @@ function requestDelete(id) {
         }
     });
 }
+
+function requestClient(nif) {
+    $.ajax({
+        type: "POST",
+        url: "client/select",
+        data: { "nif": nif },
+        dataType: "HTML",
+        success: function (data, textStatus, xhr) {
+            // if status code is 204, means client was not found
+            if (xhr.status === 204) {
+                // no client returned
+                console.log("Client was not found");
+            } else if (xhr.status === 200) {
+                let client = JSON.parse(data); // cast json to js object
+                
+                // fill fields with client information
+                $('#nif').text(client.nif);
+                $('#clientName').text(client.name +' '+ client.lastname);
+                $('#address').text(client.address);
+                $('#town').text(client.town);
+            }
+        }
+    });
+}

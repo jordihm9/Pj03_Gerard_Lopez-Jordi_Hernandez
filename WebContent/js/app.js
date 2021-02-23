@@ -48,6 +48,16 @@ function invoiceFormPopUp() {
     //add content editable and today's date
     addContentEditable();
 
+    // if nif changes, try to get a client that matches the nif and update fields
+    $('#nif').on('input propertychange', function () {
+        // get the value
+        let nif = $(this).text();
+        // validate format (8 numbers + 1 upper case letter)
+        if (!/^[0-9]{8}[A-Z]{1}$/.test(nif)) return false;
+        // send request to server
+        requestClient(nif);
+    });
+
     function close() {
         // remove events listeners
         $('#cancel').off('click');
